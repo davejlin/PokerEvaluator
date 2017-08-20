@@ -3,7 +3,7 @@ Error case 4
 1
 1 2c 3s Ab
 
-Error: invalid suite
+Error: invalid suit
 Error: hand has fewer than 3 cards
 Error: malformed or missing cards
 Error: number of hands does not match input value

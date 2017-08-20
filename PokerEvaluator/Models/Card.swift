@@ -9,25 +9,25 @@
 import Foundation
 
 protocol CardProtocol {
-    var suite: Suite { get }
-    var value: Value { get }
+    var suit: Suit { get }
+    var rank: Rank { get }
 }
 
 struct Card {
-    let suite: Suite
-    let value: Value
+    let suit: Suit
+    let rank: Rank
     
-    init(suite: Suite, value: Value) {
-        self.suite = suite
-        self.value = value
+    init(suit: Suit, rank: Rank) {
+        self.suit = suit
+        self.rank = rank
     }
 }
 
-enum Suite: String {
+enum Suit: String {
     case h, d, c, s
 }
 
-enum Value: Int {
+enum Rank: Int {
     case _2 = 2
     case _3 = 3
     case _4 = 4
@@ -36,27 +36,27 @@ enum Value: Int {
     case _7 = 7
     case _8 = 8
     case _9 = 9
-    case _10 = 10
+    case _T = 10
     case _J = 11
     case _Q = 12
     case _K = 13
     case _A = 14
     
-    static func create(from string: String) -> Value? {
+    static func create(from string: String) -> Rank? {
         switch string {
-        case "2":  return ._2
-        case "3":  return ._3
-        case "4":  return ._4
-        case "5":  return ._5
-        case "6":  return ._6
-        case "7":  return ._7
-        case "8":  return ._8
-        case "9":  return ._9
-        case "10": return ._10
-        case "J":  return ._J
-        case "Q":  return ._Q
-        case "K":  return ._K
-        case "A":  return ._A
+        case "2": return ._2
+        case "3": return ._3
+        case "4": return ._4
+        case "5": return ._5
+        case "6": return ._6
+        case "7": return ._7
+        case "8": return ._8
+        case "9": return ._9
+        case "T": return ._T
+        case "J": return ._J
+        case "Q": return ._Q
+        case "K": return ._K
+        case "A": return ._A
         default: return nil
         }
     }

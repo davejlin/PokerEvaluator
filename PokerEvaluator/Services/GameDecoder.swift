@@ -53,28 +53,28 @@ class GameDecoder: GameDecoderProtocol {
             let card = data[i]
             
             guard let suiteString = card.characters.last else {
-                print("Error: card has no suite")
+                print("Error: card has no suit")
                 continue
             }
             
-            guard let suite = Suite(rawValue: String(suiteString)) else {
-                print("Error: invalid suite")
+            guard let suit = Suit(rawValue: String(suiteString)) else {
+                print("Error: invalid suit")
                 continue
             }
             
             let index = card.index(card.startIndex, offsetBy: card.characters.count-1)
             let valueString = card.substring(to: index)
             guard valueString.characters.count > 0 else {
-                print("Error: card has no value")
+                print("Error: card has no rank")
                 continue
             }
             
-            guard let value = Value.create(from: String(valueString)) else {
-                print("Error: invalid value")
+            guard let rank = Rank.create(from: String(valueString)) else {
+                print("Error: invalid rank")
                 continue
             }
             
-            cards.append(Card(suite: suite, value: value))
+            cards.append(Card(suit: suit, rank: rank))
         }
         
         guard cards.count == 3 else {
