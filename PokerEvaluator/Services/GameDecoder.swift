@@ -27,14 +27,14 @@ class GameDecoder: GameDecoderProtocol {
             let data = readLine()!
                 .components(separatedBy: " ")
             
-            if let hand = decodeGame(from: data) {
+            if let hand = decodeHand(from: data) {
                 arr.append(hand)
             }
         }
         return arr
     }
     
-    func decodeGame(from data: [String]) -> Hand? {
+    func decodeHand(from data: [String]) -> Hand? {
         guard let id = Int(data[0]) else {
             errorHandler.create(with: Error.ID)
             return nil

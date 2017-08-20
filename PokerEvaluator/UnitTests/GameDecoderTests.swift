@@ -36,7 +36,7 @@ class GameDecoderTests {
         let expectedId = "0"
         
         let input = [expectedId, "Tc", "As", "2d"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result?.id == Int(expectedId)!, "should have id")
         assert(result?.cards[0].rank == Rank._A, "should have sorted rank")
@@ -51,7 +51,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["a"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle invalid id with nil")
         assert(errorHander.errorMessages[0] == Error.ID, "should have error message")
@@ -61,7 +61,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle no cards with nil")
         assert(errorHander.errorMessages[0] == Error.CARDS_NUMBER, "should have error message")
@@ -72,7 +72,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0", "Tc"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle less than 3 cards with nil")
         assert(errorHander.errorMessages[0] == Error.CARDS_NUMBER, "should have error message")
@@ -83,7 +83,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0", "Tc", "As", "2d", "9h"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle more than 3 cards with nil")
         assert(errorHander.errorMessages[0] == Error.CARDS_NUMBER, "should have error message")
@@ -94,7 +94,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0", "Tc", "As", "2e"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle invalid suit with nil")
         assert(errorHander.errorMessages[0] == Error.SUIT_INVALID, "should have error message")
@@ -106,7 +106,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0", "Tc", "As", "2"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle no suit with nil")
         assert(errorHander.errorMessages[0] == Error.SUIT_INVALID, "should have error message")
@@ -118,7 +118,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0", "Tc", "As", "1c"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle invalid rank with nil")
         assert(errorHander.errorMessages[0] == Error.RANK_INVALID, "should have error message")
@@ -130,7 +130,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0", "Tc", "As", "c"]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle no rank with nil")
         assert(errorHander.errorMessages[0] == Error.RANK_INVALID, "should have error message")
@@ -142,7 +142,7 @@ class GameDecoderTests {
         reset()
         
         let input = ["0", "Tc", "As", ""]
-        let result = gameDecoder.decodeGame(from: input)
+        let result = gameDecoder.decodeHand(from: input)
         
         assert(result == nil, "should handle empty card data with nil")
         assert(errorHander.errorMessages[0] == Error.SUIT_NONE, "should have error message")
