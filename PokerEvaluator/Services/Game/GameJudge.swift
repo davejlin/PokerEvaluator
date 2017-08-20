@@ -55,17 +55,17 @@ class GameJudge: GameJudgeProtocol {
         var winners = [Hand]()
         
         for iCard in rangeCards {
-            var topRank = hands[0].cards[iCard]
+            var topRank = hands[0].cards[iCard].rank
             winners = [hands[0]]
             
             for iHand in 1..<hands.count {
-                let card = hands[iHand].cards[iCard]
+                let rank = hands[iHand].cards[iCard].rank
                 
-                if card > topRank {
-                    topRank = hands[iHand].cards[iCard]
+                if rank > topRank {
+                    topRank = hands[iHand].cards[iCard].rank
                     winners = [hands[iHand]]
                 
-                } else if card == topRank {
+                } else if rank == topRank {
                     winners.append(hands[iHand])
                 }
             }

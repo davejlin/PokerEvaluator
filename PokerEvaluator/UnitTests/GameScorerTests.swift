@@ -9,7 +9,7 @@
 import Foundation
 
 class GameScorerTests {
-    let gameScorer: GameScorer
+    let gameScorer: GameScorerProtocol
     
     init() {
         gameScorer = GameScorer()

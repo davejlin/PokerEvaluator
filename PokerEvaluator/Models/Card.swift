@@ -27,7 +27,7 @@ struct Card: Comparable {
     }
     
     static func <(lhs: Card, rhs: Card) -> Bool {
-        return lhs.rank.rawValue > rhs.rank.rawValue
+        return lhs.rank.rawValue > rhs.rank.rawValue // sort cards in descending order
     }
 }
 
@@ -35,7 +35,7 @@ enum Suit: String {
     case h, d, c, s
 }
 
-enum Rank: Int {
+enum Rank: Int, Comparable {
     case _2 = 2
     case _3 = 3
     case _4 = 4
@@ -67,5 +67,13 @@ enum Rank: Int {
         case "A": return ._A
         default: return nil
         }
+    }
+    
+    static func ==(lhs: Rank, rhs: Rank) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    
+    static func <(lhs: Rank, rhs: Rank) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }
