@@ -9,22 +9,38 @@
 import Foundation
 
 protocol GameDecoderProtocol {
-    func getGame() -> [Hand]
+    func decodeGameFromConsoleInput() -> [Hand]?
 }
 
 class GameDecoder: GameDecoderProtocol {
+    let consoleInput: ConsoleInputProtocol
     let errorHandler: ErrorHandlerProtocol
-    let nHands: Int
     
-    init(with nHands: Int, errorHandler: ErrorHandlerProtocol) {
-        self.nHands = nHands
+    init(consoleInput: ConsoleInputProtocol, errorHandler: ErrorHandlerProtocol) {
+        self.consoleInput = consoleInput
         self.errorHandler = errorHandler
     }
     
-    func getGame() -> [Hand] {
+    func decodeGameFromConsoleInput() -> [Hand]? {
+        guard let nString = consoleInput.readConsoleLine(), let nHands = Int(nString) else {
+            errorHandler.create(with: Error.HANDS_INVALID)
+            return nil
+        }
+        
+        let game = decodeGame(with: nHands)
+        
+        guard nHands == game.count else {
+            errorHandler.create(with: Error.HANDS_MISMATCH)
+            return nil
+        }
+        
+        return game
+    }
+    
+    private func decodeGame(with nHands: Int) -> [Hand] {
         var arr = [Hand]()
         for _ in 0..<nHands {
-            let data = readLine()!
+            let data = consoleInput.readConsoleLine()!
                 .components(separatedBy: " ")
             
             if let hand = decodeHand(from: data) {
@@ -34,7 +50,7 @@ class GameDecoder: GameDecoderProtocol {
         return arr
     }
     
-    func decodeHand(from data: [String]) -> Hand? {
+    private func decodeHand(from data: [String]) -> Hand? {
         guard let id = Int(data[0]) else {
             errorHandler.create(with: Error.ID)
             return nil
