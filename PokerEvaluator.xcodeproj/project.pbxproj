@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1852DC931F49DEAD0099BD70 /* GameScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852DC921F49DEAD0099BD70 /* GameScorer.swift */; };
+		1852DC951F49ED830099BD70 /* GameScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852DC941F49ED830099BD70 /* GameScorerTests.swift */; };
 		18DDBE4A1F49020D004A463C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDBE491F49020D004A463C /* main.swift */; };
 		18DDBE511F49050B004A463C /* GameDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDBE501F49050B004A463C /* GameDecoder.swift */; };
 		18FD60101F490AFE00089DC3 /* Hand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD600F1F490AFE00089DC3 /* Hand.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1852DC921F49DEAD0099BD70 /* GameScorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScorer.swift; path = Services/GameScorer.swift; sourceTree = "<group>"; };
+		1852DC941F49ED830099BD70 /* GameScorerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScorerTests.swift; path = UnitTests/GameScorerTests.swift; sourceTree = "<group>"; };
 		18DDBE461F49020D004A463C /* PokerEvaluator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PokerEvaluator; sourceTree = BUILT_PRODUCTS_DIR; };
 		18DDBE491F49020D004A463C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		18DDBE501F49050B004A463C /* GameDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameDecoder.swift; path = Services/GameDecoder.swift; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				18DDBE501F49050B004A463C /* GameDecoder.swift */,
+				1852DC921F49DEAD0099BD70 /* GameScorer.swift */,
 				18FD60151F49B91000089DC3 /* ErrorHandler.swift */,
 			);
 			name = Services;
@@ -106,6 +111,7 @@
 				18FD60181F49C44E00089DC3 /* UnitTests.swift */,
 				18FD601A1F49C4D700089DC3 /* SortTests.swift */,
 				18FD601C1F49CC0F00089DC3 /* GameDecoderTests.swift */,
+				1852DC941F49ED830099BD70 /* GameScorerTests.swift */,
 			);
 			name = UnitTests;
 			sourceTree = "<group>";
@@ -180,6 +186,8 @@
 				18FD60201F49CD7700089DC3 /* MockErrorHandler.swift in Sources */,
 				18DDBE4A1F49020D004A463C /* main.swift in Sources */,
 				18FD60191F49C44E00089DC3 /* UnitTests.swift in Sources */,
+				1852DC931F49DEAD0099BD70 /* GameScorer.swift in Sources */,
+				1852DC951F49ED830099BD70 /* GameScorerTests.swift in Sources */,
 				18DDBE511F49050B004A463C /* GameDecoder.swift in Sources */,
 				18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */,
 				18FD601D1F49CC0F00089DC3 /* GameDecoderTests.swift in Sources */,

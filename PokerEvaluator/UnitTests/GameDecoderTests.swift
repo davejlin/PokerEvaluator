@@ -39,11 +39,11 @@ class GameDecoderTests {
         let result = gameDecoder.decodeHand(from: input)
         
         assert(result?.id == Int(expectedId)!, "should have id")
-        assert(result?.cards[0].rank == Rank._A, "should have sorted rank")
+        assert(result?.cards[0].rank == Rank._A, "should be sorted by rank")
         assert(result?.cards[0].suit == Suit.s, "should have suit")
-        assert(result?.cards[1].rank == Rank._T, "should have sorted rank")
+        assert(result?.cards[1].rank == Rank._T, "should be sorted by rank")
         assert(result?.cards[1].suit == Suit.c, "should have suit")
-        assert(result?.cards[2].rank == Rank._2, "should have sorted rank")
+        assert(result?.cards[2].rank == Rank._2, "should be sorted by rank")
         assert(result?.cards[2].suit == Suit.d, "should have suit")
     }
     
