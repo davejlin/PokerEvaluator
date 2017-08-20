@@ -14,6 +14,8 @@
 		18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD60151F49B91000089DC3 /* ErrorHandler.swift */; };
 		18FD60191F49C44E00089DC3 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD60181F49C44E00089DC3 /* UnitTests.swift */; };
 		18FD601B1F49C4D700089DC3 /* SortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD601A1F49C4D700089DC3 /* SortTests.swift */; };
+		18FD601D1F49CC0F00089DC3 /* GameDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD601C1F49CC0F00089DC3 /* GameDecoderTests.swift */; };
+		18FD60201F49CD7700089DC3 /* MockErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD601F1F49CD7700089DC3 /* MockErrorHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,8 +37,10 @@
 		18FD600F1F490AFE00089DC3 /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hand.swift; path = Models/Hand.swift; sourceTree = "<group>"; };
 		18FD60111F490BB200089DC3 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Card.swift; path = Models/Card.swift; sourceTree = "<group>"; };
 		18FD60151F49B91000089DC3 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = Services/ErrorHandler.swift; sourceTree = "<group>"; };
-		18FD60181F49C44E00089DC3 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnitTests.swift; path = "Unit Tests/UnitTests.swift"; sourceTree = "<group>"; };
-		18FD601A1F49C4D700089DC3 /* SortTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SortTests.swift; path = "Unit Tests/SortTests.swift"; sourceTree = "<group>"; };
+		18FD60181F49C44E00089DC3 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnitTests.swift; path = UnitTests/UnitTests.swift; sourceTree = "<group>"; };
+		18FD601A1F49C4D700089DC3 /* SortTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SortTests.swift; path = UnitTests/SortTests.swift; sourceTree = "<group>"; };
+		18FD601C1F49CC0F00089DC3 /* GameDecoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameDecoderTests.swift; path = UnitTests/GameDecoderTests.swift; sourceTree = "<group>"; };
+		18FD601F1F49CD7700089DC3 /* MockErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockErrorHandler.swift; path = UnitTests/Mocks/MockErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +76,7 @@
 				18DDBE491F49020D004A463C /* main.swift */,
 				18FD60131F49189700089DC3 /* Models */,
 				18FD60141F4918C800089DC3 /* Services */,
-				18FD60171F49C3BD00089DC3 /* Unit Tests */,
+				18FD60171F49C3BD00089DC3 /* UnitTests */,
 			);
 			path = PokerEvaluator;
 			sourceTree = "<group>";
@@ -95,13 +99,23 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
-		18FD60171F49C3BD00089DC3 /* Unit Tests */ = {
+		18FD60171F49C3BD00089DC3 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				18FD601E1F49CD5A00089DC3 /* Mocks */,
 				18FD60181F49C44E00089DC3 /* UnitTests.swift */,
 				18FD601A1F49C4D700089DC3 /* SortTests.swift */,
+				18FD601C1F49CC0F00089DC3 /* GameDecoderTests.swift */,
 			);
-			name = "Unit Tests";
+			name = UnitTests;
+			sourceTree = "<group>";
+		};
+		18FD601E1F49CD5A00089DC3 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				18FD601F1F49CD7700089DC3 /* MockErrorHandler.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,10 +177,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18FD60201F49CD7700089DC3 /* MockErrorHandler.swift in Sources */,
 				18DDBE4A1F49020D004A463C /* main.swift in Sources */,
 				18FD60191F49C44E00089DC3 /* UnitTests.swift in Sources */,
 				18DDBE511F49050B004A463C /* GameDecoder.swift in Sources */,
 				18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */,
+				18FD601D1F49CC0F00089DC3 /* GameDecoderTests.swift in Sources */,
 				18FD60101F490AFE00089DC3 /* Hand.swift in Sources */,
 				18FD60121F490BB200089DC3 /* Card.swift in Sources */,
 				18FD601B1F49C4D700089DC3 /* SortTests.swift in Sources */,

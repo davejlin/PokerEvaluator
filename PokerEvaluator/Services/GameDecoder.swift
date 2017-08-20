@@ -13,10 +13,12 @@ protocol GameDecoderProtocol {
 }
 
 class GameDecoder: GameDecoderProtocol {
-    let nHands: Int;
+    let errorHandler: ErrorHandlerProtocol
+    let nHands: Int
     
-    init(with nHands: Int) {
+    init(with nHands: Int, errorHandler: ErrorHandlerProtocol) {
         self.nHands = nHands
+        self.errorHandler = errorHandler
     }
     
     func getGame() -> [Hand] {
@@ -32,18 +34,18 @@ class GameDecoder: GameDecoderProtocol {
         return arr
     }
     
-    private func decodeGame(from data: [String]) -> Hand? {
+    func decodeGame(from data: [String]) -> Hand? {
         guard let id = Int(data[0]) else {
-            ErrorHandler.create(with: "Error: malformed or missing id")
+            errorHandler.create(with: Error.ID)
             return nil
         }
         
         guard let cards = decodeCards(from: data) else {
-            ErrorHandler.create(with: "Error: malformed or missing cards")
+            errorHandler.create(with: Error.CARDS)
             return nil
         }
         
-        return Hand(id: id, cards: cards)
+        return Hand(id: id, cards: cards.sorted())
     }
     
     private func decodeCards(from data:[String]) -> [Card]? {
@@ -52,23 +54,23 @@ class GameDecoder: GameDecoderProtocol {
         for i in 1..<data.count {
             let card = data[i]
             
-            guard let suiteString = card.characters.last else {
-                ErrorHandler.create(with: "Error: card has no suit")
+            guard let suitString = card.characters.last else {
+                errorHandler.create(with: Error.SUIT_NONE)
                 break
             }
             
-            guard let suit = Suit(rawValue: String(suiteString)) else {
-                ErrorHandler.create(with: "Error: invalid suit")
+            guard let suit = Suit(rawValue: String(suitString)) else {
+                errorHandler.create(with: Error.SUIT_INVALID)
                 break
             }
             
             guard let rankString = card.characters.first else {
-                ErrorHandler.create(with: "Error: card has no rank")
+                errorHandler.create(with: Error.RANK_NONE)
                 break
             }
             
             guard let rank = Rank.create(from: String(rankString)) else {
-                ErrorHandler.create(with: "Error: invalid rank")
+                errorHandler.create(with: Error.RANK_INVALID)
                 break
             }
             
@@ -76,7 +78,7 @@ class GameDecoder: GameDecoderProtocol {
         }
         
         guard cards.count == 3 else {
-            ErrorHandler.create(with: "Error: hand does not have 3 cards")
+            errorHandler.create(with: Error.CARDS_NUMBER)
             return nil
         }
         

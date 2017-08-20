@@ -9,16 +9,18 @@
 import Foundation
 
 func main() {
-    guard let nString = readLine(), let n = Int(nString) else {
-        ErrorHandler.create(with: "Error: invalid number of hands")
+    let errorHander: ErrorHandlerProtocol = ErrorHandler()
+    
+    guard let nString = readLine(), let nHands = Int(nString) else {
+        errorHander.create(with: Error.HANDS_INVALID)
         return
     }
 
-    let gameDecoder = GameDecoder(with: n)
+    let gameDecoder = GameDecoder(with: nHands, errorHandler: errorHander)
     let game = gameDecoder.getGame()
 
-    guard n == game.count else {
-        ErrorHandler.create(with: "Error: number of hands does not match input value")
+    guard nHands == game.count else {
+        errorHander.create(with: Error.HANDS_MISMATCH)
         return
     }
 }
