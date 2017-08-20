@@ -17,5 +17,5 @@ func runUnitTests() {
     let _ = UnitTests()
 }
 
-//runUnitTests()
+runUnitTests()
 main()

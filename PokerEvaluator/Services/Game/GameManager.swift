@@ -14,24 +14,24 @@ protocol GameManagerProtocol {
 
 class GameManager: GameManagerProtocol {
     let errorHandler: ErrorHandlerProtocol = ErrorHandler()
-    let consoleInput: ConsoleInputProtocol = ConsoleInputWrapper()
+    let console: ConsoleProtocol = ConsoleWrapper()
     let gameDecoder: GameDecoderProtocol
     let gameScorer: GameScorerProtocol = GameScorer()
+    let gameJudge: GameJudgeProtocol = GameJudge()
     
     init() {
-        gameDecoder = GameDecoder(consoleInput: consoleInput, errorHandler: errorHandler)
+        gameDecoder = GameDecoder(console: console, errorHandler: errorHandler)
     }
     
     func start() {
         guard var game = getGame() else { return }
         gameScorer.score(of: &game)
+        let winnerIDs = gameJudge.judge(for: game)
+        console.printOut(winnerIDs)
     }
     
-    func getGame() -> [Hand]? {
-        
-        let gameDecoder = GameDecoder(consoleInput: consoleInput, errorHandler: errorHandler)
-        let game = gameDecoder.decodeGameFromConsoleInput()
-        
-        return game
+    private func getGame() -> [Hand]? {
+        let gameDecoder = GameDecoder(console: console, errorHandler: errorHandler)
+        return gameDecoder.decodeGameFromConsoleInput()
     }
 }

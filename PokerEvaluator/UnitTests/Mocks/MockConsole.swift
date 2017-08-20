@@ -1,5 +1,5 @@
 //
-//  MockConsoleInput.swift
+//  MockConsole.swift
 //  PokerEvaluator
 //
 //  Created by Lin David, US-20 on 8/20/17.
@@ -8,12 +8,17 @@
 
 import Foundation
 
-class MockConsoleInput: ConsoleInputProtocol {
+class MockConsole: ConsoleProtocol {
     var stringsToReturn = [String?]()
     var index = -1
     
     func readConsoleLine() -> String? {
         index += 1
         return stringsToReturn[index]
+    }
+    
+    var arrayToPrint = [Int]()
+    func printOut(_ arr:[Int]) {
+        arrayToPrint = arr
     }
 }

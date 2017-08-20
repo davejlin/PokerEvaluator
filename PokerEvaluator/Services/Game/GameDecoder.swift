@@ -13,16 +13,16 @@ protocol GameDecoderProtocol {
 }
 
 class GameDecoder: GameDecoderProtocol {
-    let consoleInput: ConsoleInputProtocol
+    let console: ConsoleProtocol
     let errorHandler: ErrorHandlerProtocol
     
-    init(consoleInput: ConsoleInputProtocol, errorHandler: ErrorHandlerProtocol) {
-        self.consoleInput = consoleInput
+    init(console: ConsoleProtocol, errorHandler: ErrorHandlerProtocol) {
+        self.console = console
         self.errorHandler = errorHandler
     }
     
     func decodeGameFromConsoleInput() -> [Hand]? {
-        guard let nString = consoleInput.readConsoleLine(), let nHands = Int(nString) else {
+        guard let nString = console.readConsoleLine(), let nHands = Int(nString) else {
             errorHandler.create(with: Error.HANDS_INVALID)
             return nil
         }
@@ -40,7 +40,7 @@ class GameDecoder: GameDecoderProtocol {
     private func decodeGame(with nHands: Int) -> [Hand] {
         var arr = [Hand]()
         for _ in 0..<nHands {
-            let data = consoleInput.readConsoleLine()!
+            let data = console.readConsoleLine()!
                 .components(separatedBy: " ")
             
             if let hand = decodeHand(from: data) {

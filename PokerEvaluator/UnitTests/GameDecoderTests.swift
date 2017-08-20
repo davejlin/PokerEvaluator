@@ -9,12 +9,12 @@
 import Foundation
 
 class GameDecoderTests {
-    let mockConsoleInput = MockConsoleInput()
+    let mockConsole = MockConsole()
     let mockErrorHander = MockErrorHandler()
     let gameDecoder: GameDecoderProtocol
     
     init() {
-        gameDecoder = GameDecoder(consoleInput: mockConsoleInput, errorHandler: mockErrorHander)
+        gameDecoder = GameDecoder(console: mockConsole, errorHandler: mockErrorHander)
         runTests()
     }
     
@@ -37,9 +37,9 @@ class GameDecoderTests {
         let input1 = "0 Tc As 2d"
         let input2 = "1 4c Kd Js"
         
-        mockConsoleInput.stringsToReturn.append("2")
-        mockConsoleInput.stringsToReturn.append(input1)
-        mockConsoleInput.stringsToReturn.append(input2)
+        mockConsole.stringsToReturn.append("2")
+        mockConsole.stringsToReturn.append(input1)
+        mockConsole.stringsToReturn.append(input2)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -74,8 +74,8 @@ class GameDecoderTests {
         reset()
         
         let input = "a"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -87,8 +87,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -101,8 +101,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0 Tc"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -115,8 +115,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0 Tc As 2d 9h"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -129,8 +129,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0 Tc As 2e"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -144,8 +144,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0 Tc As 2"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -159,8 +159,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0 Tc As 1c"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -174,8 +174,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0 Tc As c"
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -189,8 +189,8 @@ class GameDecoderTests {
         reset()
         
         let input = "0 Tc As  "
-        mockConsoleInput.stringsToReturn.append("1")
-        mockConsoleInput.stringsToReturn.append(input)
+        mockConsole.stringsToReturn.append("1")
+        mockConsole.stringsToReturn.append(input)
         
         let game = gameDecoder.decodeGameFromConsoleInput()
         
@@ -201,8 +201,8 @@ class GameDecoderTests {
     }
     
     func reset() {
-        mockConsoleInput.stringsToReturn = []
-        mockConsoleInput.index = -1
+        mockConsole.stringsToReturn = []
+        mockConsole.index = -1
         mockErrorHander.errorMessages = []
     }
 }
