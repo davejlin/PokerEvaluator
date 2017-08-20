@@ -8,15 +8,19 @@
 
 import Foundation
 
-guard let nString = readLine(), let n = Int(nString) else {
-    print("Error: invalid number of hands")
-    exit(-1)
+func main() {
+    guard let nString = readLine(), let n = Int(nString) else {
+        ErrorHandler.create(with: "Error: invalid number of hands")
+        return
+    }
+
+    let gameDecoder = GameDecoder(with: n)
+    let game = gameDecoder.getGame()
+
+    guard n == game.count else {
+        ErrorHandler.create(with: "Error: number of hands does not match input value")
+        return
+    }
 }
 
-let gameDecoder = GameDecoder(with: n)
-let game = gameDecoder.getGame()
-
-guard n == game.count else {
-    print("Error: number of hands does not match input value")
-    exit(-1)
-}
+main()

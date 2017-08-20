@@ -11,6 +11,7 @@
 		18DDBE511F49050B004A463C /* GameDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDBE501F49050B004A463C /* GameDecoder.swift */; };
 		18FD60101F490AFE00089DC3 /* Hand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD600F1F490AFE00089DC3 /* Hand.swift */; };
 		18FD60121F490BB200089DC3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD60111F490BB200089DC3 /* Card.swift */; };
+		18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD60151F49B91000089DC3 /* ErrorHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,7 @@
 		18DDBE501F49050B004A463C /* GameDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameDecoder.swift; path = Services/GameDecoder.swift; sourceTree = "<group>"; };
 		18FD600F1F490AFE00089DC3 /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hand.swift; path = Models/Hand.swift; sourceTree = "<group>"; };
 		18FD60111F490BB200089DC3 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Card.swift; path = Models/Card.swift; sourceTree = "<group>"; };
+		18FD60151F49B91000089DC3 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = Services/ErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				18DDBE501F49050B004A463C /* GameDecoder.swift */,
+				18FD60151F49B91000089DC3 /* ErrorHandler.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			files = (
 				18DDBE4A1F49020D004A463C /* main.swift in Sources */,
 				18DDBE511F49050B004A463C /* GameDecoder.swift in Sources */,
+				18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */,
 				18FD60101F490AFE00089DC3 /* Hand.swift in Sources */,
 				18FD60121F490BB200089DC3 /* Card.swift in Sources */,
 			);

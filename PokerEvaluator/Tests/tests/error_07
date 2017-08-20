@@ -4,6 +4,3 @@ Error case 7
 1 A
 
 Error: invalid suit
-Error: hand does not have 3 cards
-Error: malformed or missing cards
-Error: number of hands does not match input value

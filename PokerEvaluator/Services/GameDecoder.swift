@@ -34,12 +34,12 @@ class GameDecoder: GameDecoderProtocol {
     
     private func decodeGame(from data: [String]) -> Hand? {
         guard let id = Int(data[0]) else {
-            print("Error: malformed or missing id")
+            ErrorHandler.create(with: "Error: malformed or missing id")
             return nil
         }
         
         guard let cards = decodeCards(from: data) else {
-            print("Error: malformed or missing cards")
+            ErrorHandler.create(with: "Error: malformed or missing cards")
             return nil
         }
         
@@ -53,30 +53,30 @@ class GameDecoder: GameDecoderProtocol {
             let card = data[i]
             
             guard let suiteString = card.characters.last else {
-                print("Error: card has no suit")
-                continue
+                ErrorHandler.create(with: "Error: card has no suit")
+                break
             }
             
             guard let suit = Suit(rawValue: String(suiteString)) else {
-                print("Error: invalid suit")
-                continue
+                ErrorHandler.create(with: "Error: invalid suit")
+                break
             }
             
             guard let rankString = card.characters.first else {
-                print("Error: card has no rank")
-                continue
+                ErrorHandler.create(with: "Error: card has no rank")
+                break
             }
             
             guard let rank = Rank.create(from: String(rankString)) else {
-                print("Error: invalid rank")
-                continue
+                ErrorHandler.create(with: "Error: invalid rank")
+                break
             }
             
             cards.append(Card(suit: suit, rank: rank))
         }
         
         guard cards.count == 3 else {
-            print("Error: hand does not have 3 cards")
+            ErrorHandler.create(with: "Error: hand does not have 3 cards")
             return nil
         }
         
