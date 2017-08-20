@@ -1,0 +1,9 @@
+Error case 3
+
+1
+1 c
+
+Error: card has no value
+Error: hand has fewer than 3 cards
+Error: malformed or missing cards
+Error: number of hands does not match input value

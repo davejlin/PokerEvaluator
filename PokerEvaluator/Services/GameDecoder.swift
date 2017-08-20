@@ -52,16 +52,6 @@ class GameDecoder: GameDecoderProtocol {
         for i in 1..<data.count {
             let card = data[i]
             
-            guard let valueString = card.characters.first else {
-                print("Error: card has no value")
-                continue
-            }
-            
-            guard let value = Value.create(from: String(valueString)) else {
-                print("Error: invalid value")
-                continue
-            }
-            
             guard let suiteString = card.characters.last else {
                 print("Error: card has no suite")
                 continue
@@ -69,6 +59,18 @@ class GameDecoder: GameDecoderProtocol {
             
             guard let suite = Suite(rawValue: String(suiteString)) else {
                 print("Error: invalid suite")
+                continue
+            }
+            
+            let index = card.index(card.startIndex, offsetBy: card.characters.count-1)
+            let valueString = card.substring(to: index)
+            guard valueString.characters.count > 0 else {
+                print("Error: card has no value")
+                continue
+            }
+            
+            guard let value = Value.create(from: String(valueString)) else {
+                print("Error: invalid value")
                 continue
             }
             

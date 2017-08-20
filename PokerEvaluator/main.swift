@@ -16,4 +16,7 @@ guard let nString = readLine(), let n = Int(nString) else {
 let gameDecoder = GameDecoder(with: n)
 let game = gameDecoder.getGame()
 
-print(game)
+guard n == game.count else {
+    print("Error: number of hands does not match input value")
+    exit(-1)
+}

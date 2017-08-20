@@ -28,9 +28,9 @@
 /* Begin PBXFileReference section */
 		18DDBE461F49020D004A463C /* PokerEvaluator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PokerEvaluator; sourceTree = BUILT_PRODUCTS_DIR; };
 		18DDBE491F49020D004A463C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		18DDBE501F49050B004A463C /* GameDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDecoder.swift; sourceTree = "<group>"; };
-		18FD600F1F490AFE00089DC3 /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hand.swift; sourceTree = "<group>"; };
-		18FD60111F490BB200089DC3 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		18DDBE501F49050B004A463C /* GameDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameDecoder.swift; path = Services/GameDecoder.swift; sourceTree = "<group>"; };
+		18FD600F1F490AFE00089DC3 /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hand.swift; path = Models/Hand.swift; sourceTree = "<group>"; };
+		18FD60111F490BB200089DC3 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Card.swift; path = Models/Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,12 +63,28 @@
 		18DDBE481F49020D004A463C /* PokerEvaluator */ = {
 			isa = PBXGroup;
 			children = (
+				18FD60141F4918C800089DC3 /* Services */,
+				18FD60131F49189700089DC3 /* Models */,
 				18DDBE491F49020D004A463C /* main.swift */,
-				18DDBE501F49050B004A463C /* GameDecoder.swift */,
+			);
+			path = PokerEvaluator;
+			sourceTree = "<group>";
+		};
+		18FD60131F49189700089DC3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
 				18FD600F1F490AFE00089DC3 /* Hand.swift */,
 				18FD60111F490BB200089DC3 /* Card.swift */,
 			);
-			path = PokerEvaluator;
+			name = Models;
+			sourceTree = "<group>";
+		};
+		18FD60141F4918C800089DC3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				18DDBE501F49050B004A463C /* GameDecoder.swift */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
