@@ -8,4 +8,12 @@
 
 import Foundation
 
+guard let nString = readLine(), let n = Int(nString) else {
+    print("Error: invalid number of hands")
+    exit(-1)
+}
 
+let gameDecoder = GameDecoder(with: n)
+let game = gameDecoder.getGame()
+
+print(game)
