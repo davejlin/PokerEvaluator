@@ -23,4 +23,9 @@ func main() {
     }
 }
 
+func runUnitTests() {
+    let _ = UnitTests()
+}
+
+runUnitTests()
 main()

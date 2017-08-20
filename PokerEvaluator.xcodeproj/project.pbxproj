@@ -12,6 +12,8 @@
 		18FD60101F490AFE00089DC3 /* Hand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD600F1F490AFE00089DC3 /* Hand.swift */; };
 		18FD60121F490BB200089DC3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD60111F490BB200089DC3 /* Card.swift */; };
 		18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD60151F49B91000089DC3 /* ErrorHandler.swift */; };
+		18FD60191F49C44E00089DC3 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD60181F49C44E00089DC3 /* UnitTests.swift */; };
+		18FD601B1F49C4D700089DC3 /* SortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD601A1F49C4D700089DC3 /* SortTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +35,8 @@
 		18FD600F1F490AFE00089DC3 /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hand.swift; path = Models/Hand.swift; sourceTree = "<group>"; };
 		18FD60111F490BB200089DC3 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Card.swift; path = Models/Card.swift; sourceTree = "<group>"; };
 		18FD60151F49B91000089DC3 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = Services/ErrorHandler.swift; sourceTree = "<group>"; };
+		18FD60181F49C44E00089DC3 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnitTests.swift; path = "Unit Tests/UnitTests.swift"; sourceTree = "<group>"; };
+		18FD601A1F49C4D700089DC3 /* SortTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SortTests.swift; path = "Unit Tests/SortTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +69,10 @@
 		18DDBE481F49020D004A463C /* PokerEvaluator */ = {
 			isa = PBXGroup;
 			children = (
-				18FD60141F4918C800089DC3 /* Services */,
-				18FD60131F49189700089DC3 /* Models */,
 				18DDBE491F49020D004A463C /* main.swift */,
+				18FD60131F49189700089DC3 /* Models */,
+				18FD60141F4918C800089DC3 /* Services */,
+				18FD60171F49C3BD00089DC3 /* Unit Tests */,
 			);
 			path = PokerEvaluator;
 			sourceTree = "<group>";
@@ -88,6 +93,15 @@
 				18FD60151F49B91000089DC3 /* ErrorHandler.swift */,
 			);
 			name = Services;
+			sourceTree = "<group>";
+		};
+		18FD60171F49C3BD00089DC3 /* Unit Tests */ = {
+			isa = PBXGroup;
+			children = (
+				18FD60181F49C44E00089DC3 /* UnitTests.swift */,
+				18FD601A1F49C4D700089DC3 /* SortTests.swift */,
+			);
+			name = "Unit Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,10 +164,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				18DDBE4A1F49020D004A463C /* main.swift in Sources */,
+				18FD60191F49C44E00089DC3 /* UnitTests.swift in Sources */,
 				18DDBE511F49050B004A463C /* GameDecoder.swift in Sources */,
 				18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */,
 				18FD60101F490AFE00089DC3 /* Hand.swift in Sources */,
 				18FD60121F490BB200089DC3 /* Card.swift in Sources */,
+				18FD601B1F49C4D700089DC3 /* SortTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

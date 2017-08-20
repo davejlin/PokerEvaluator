@@ -13,13 +13,21 @@ protocol CardProtocol {
     var rank: Rank { get }
 }
 
-struct Card {
+struct Card: Comparable {
     let suit: Suit
     let rank: Rank
     
     init(suit: Suit, rank: Rank) {
         self.suit = suit
         self.rank = rank
+    }
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+        return lhs.rank.rawValue == rhs.rank.rawValue
+    }
+    
+    static func <(lhs: Card, rhs: Card) -> Bool {
+        return lhs.rank.rawValue > rhs.rank.rawValue
     }
 }
 
