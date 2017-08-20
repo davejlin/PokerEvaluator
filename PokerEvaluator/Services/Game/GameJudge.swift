@@ -52,25 +52,29 @@ class GameJudge: GameJudgeProtocol {
         }
         
         let rangeCards = stride(from:0, to: nCards, by: stepSizeThroughCards)
-        var winners = [Hand]()
+        var winners = hands
         
         for iCard in rangeCards {
-            var topRank = hands[0].cards[iCard].rank
-            winners = [hands[0]]
-            
-            for iHand in 1..<hands.count {
-                let rank = hands[iHand].cards[iCard].rank
-                
-                if rank > topRank {
-                    topRank = hands[iHand].cards[iCard].rank
-                    winners = [hands[iHand]]
-                
-                } else if rank == topRank {
-                    winners.append(hands[iHand])
-                }
-            }
-            
+            winners = findWinners(in: winners, of: iCard)
             if winners.count == 1 { return winners }
+        }
+        
+        return winners
+    }
+    
+    private func findWinners(in hands:[Hand], of iCard: Int) -> [Hand] {
+        var topRank = hands[0].cards[iCard].rank
+        var winners = [hands[0]]
+        
+        for iHand in 1..<hands.count {
+            let rank = hands[iHand].cards[iCard].rank
+            
+            if rank > topRank {
+                topRank = hands[iHand].cards[iCard].rank
+                winners = [hands[iHand]]
+            } else if rank == topRank {
+                winners.append(hands[iHand])
+            }
         }
         
         return winners
