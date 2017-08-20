@@ -1,9 +1,8 @@
-Error case 4
+Error case 6
 
 1
-1 2c 3s Ab
+1 Tc As 2d 4h
 
-Error: invalid suit
 Error: hand does not have 3 cards
 Error: malformed or missing cards
 Error: number of hands does not match input value

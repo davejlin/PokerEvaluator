@@ -62,14 +62,12 @@ class GameDecoder: GameDecoderProtocol {
                 continue
             }
             
-            let index = card.index(card.startIndex, offsetBy: card.characters.count-1)
-            let valueString = card.substring(to: index)
-            guard valueString.characters.count > 0 else {
+            guard let rankString = card.characters.first else {
                 print("Error: card has no rank")
                 continue
             }
             
-            guard let rank = Rank.create(from: String(valueString)) else {
+            guard let rank = Rank.create(from: String(rankString)) else {
                 print("Error: invalid rank")
                 continue
             }
@@ -78,7 +76,7 @@ class GameDecoder: GameDecoderProtocol {
         }
         
         guard cards.count == 3 else {
-            print("Error: hand has fewer than 3 cards")
+            print("Error: hand does not have 3 cards")
             return nil
         }
         
