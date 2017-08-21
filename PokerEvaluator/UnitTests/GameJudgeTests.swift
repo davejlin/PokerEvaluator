@@ -26,6 +26,11 @@ class GameJudgeTests {
     
     func runTests() {
         testStraightFlush()
+        testStraightFlush_AceLow()
+        testStraightFlush_AceHigh()
+        testStraightFlush_AceLowVsHigh()
+        testStraightFlush_WithTie_AceLoses()
+        testStraightFlush_WithTie_AceLow()
         testStraightFlush_WithTie()
         testStraightFlush_WithTiesAndOneWinner()
         testStraightFlush_WithTiesAndThreeWinners()
@@ -35,7 +40,12 @@ class GameJudgeTests {
         testThreeOfAKind_WithTieAndTwoWinners()
         
         testStraight()
+        testStraight_AceLow()
+        testStraight_AceHigh()
+        testStraight_AceLowVsHigh()
         testStraight_WithTie()
+        testStraight_WithTie_AceLoses()
+        testStraight_WithTie_AceLow()
         testStraight_WithTieAndFourWinners()
         
         testFlush()
@@ -72,6 +82,85 @@ class GameJudgeTests {
         
         assert(winner.count == 1, "should find winner")
         assert(winner[0] == 4, "should find straight flush winner")
+    }
+    
+    func testStraightFlush_AceLow() {
+        let input = [
+            "8",
+            "1 Ac As Ad",
+            "2 3s 2s As",
+            "3 Kd Qd Jh",
+            "4 Qc Kc Ad",
+            "5 Ac 3d Ah",
+            "6 4c 3c Ac",
+            "7 Kc Kc Ac",
+            "8 Td 2c Ah"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 2, "should find straight flush winner")
+    }
+    
+    func testStraightFlush_AceHigh() {
+        let input = [
+            "8",
+            "1 Ac As Ad",
+            "2 Kd Qd Jh",
+            "3 Qc Kc Ad",
+            "4 Ac 3d Ah",
+            "5 4c 3c Ac",
+            "6 Kc Kc Ac",
+            "7 Qs Ks As",
+            "8 Td 2c Ah"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 7, "should find straight flush winner")
+    }
+    
+    
+    func testStraightFlush_AceLowVsHigh() {
+        let input = [
+            "2",
+            "1 2c 3s Ad",
+            "2 Kd Qd Ad",
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 2, "should find straight flush winner")
+    }
+    
+    func testStraightFlush_WithTie_AceLoses() {
+        let input = [
+            "2",
+            "1 2c 3c 4c",
+            "2 As 3s 2s"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 1, "should find straight flush winner")
+    }
+    
+    func testStraightFlush_WithTie_AceLow() {
+        let input = [
+            "2",
+            "1 3c Ac 2c",
+            "2 As 3s 2s"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 2, "should find winner")
+        assert(winner[0] == 1, "should find straight flush winner")
+        assert(winner[1] == 2, "should find straight flush winner")
     }
     
     func testStraightFlush_WithTie() {
@@ -187,6 +276,51 @@ class GameJudgeTests {
         assert(winner[0] == 1, "should find straight winner")
     }
     
+    func testStraight_AceHigh() {
+        let input = [
+            "4",
+            "1 6s 3c 4h",
+            "2 Ac Ad 2s",
+            "3 Td 8d Jd",
+            "4 Ad Kc Qs"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 4, "should find straight winner")
+    }
+    
+    func testStraight_AceLow() {
+        let input = [
+            "4",
+            "1 6s 3c 4h",
+            "2 Ac 3d 2s",
+            "3 Td 8d Jd",
+            "4 As Ts Qd"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 2, "should find straight winner")
+    }
+    
+    func testStraight_AceLowVsHigh() {
+        let input = [
+            "4",
+            "1 6s 3c 4h",
+            "2 Ac 3d 2s",
+            "3 Td 8d Jd",
+            "4 Ks Qc Ah"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 4, "should find straight winner")
+    }
+    
     func testStraight_WithTie() {
         let input = [
             "4",
@@ -200,6 +334,33 @@ class GameJudgeTests {
         
         assert(winner.count == 1, "should find winner")
         assert(winner[0] == 3, "should find straight winner")
+    }
+    
+    func testStraight_WithTie_AceLoses() {
+        let input = [
+            "2",
+            "1 2s 3c Ah",
+            "2 3c 4d 2s"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 2, "should find straight winner")
+    }
+    
+    func testStraight_WithTie_AceLow() {
+        let input = [
+            "2",
+            "1 2s 3c Ah",
+            "2 Ac 2d 3s"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 2, "should find winner")
+        assert(winner[0] == 1, "should find straight winner")
+        assert(winner[1] == 2, "should find straight winner")
     }
     
     func testStraight_WithTieAndFourWinners() {

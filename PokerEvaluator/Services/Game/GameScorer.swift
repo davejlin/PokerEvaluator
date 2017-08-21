@@ -21,10 +21,25 @@ class GameScorer: GameScorerProtocol {
     
     private func calculateScore(of sortedCards: [Card]) -> Int {
         let straight = isStraight(of: sortedCards)
+        let straightWithAceLow = isStraightWithAce(of: sortedCards)
         let flush = isFlush(of: sortedCards)
         
-        if straight && flush { return Score.STRAIGHT_FLUSH }
-        if straight { return Score.STRAIGHT }
+        if straight && flush {
+            return Score.STRAIGHT_FLUSH
+        }
+        
+        if straightWithAceLow && flush {
+            return Score.STRAIGHT_FLUSH_ACE_LOW
+        }
+        
+        if straight {
+            return Score.STRAIGHT
+        }
+        
+        if straightWithAceLow {
+            return Score.STRAIGHT_ACE_LOW
+        }
+        
         if isThreeOfAKind(of: sortedCards) { return Score.THREE_OF_A_KIND }
         if flush { return Score.FLUSH }
         if isPair(of: sortedCards) { return Score.PAIR }
@@ -38,6 +53,17 @@ class GameScorer: GameScorerProtocol {
         }
         
         return true
+    }
+    
+    private func isStraightWithAce(of sortedCards: [Card]) -> Bool {
+        // A may have rank value 1 in a straight
+        if sortedCards[0].rank == Rank._A {
+            if sortedCards[1].rank == Rank._3 &&
+                sortedCards[2].rank == Rank._2 {
+                return true
+            }
+        }
+        return false
     }
     
     private func isFlush(of sortedCards: [Card]) -> Bool {
@@ -71,8 +97,10 @@ class GameScorer: GameScorerProtocol {
 
 struct Score {
     static let STRAIGHT_FLUSH = 1000
+    static let STRAIGHT_FLUSH_ACE_LOW = 999
     static let THREE_OF_A_KIND = 800
     static let STRAIGHT = 600
+    static let STRAIGHT_ACE_LOW = 599
     static let FLUSH = 400
     static let PAIR = 200
     static let HIGH_CARD = 0

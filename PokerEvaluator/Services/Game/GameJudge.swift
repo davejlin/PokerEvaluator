@@ -44,7 +44,8 @@ class GameJudge: GameJudgeProtocol {
     }
     
     private func breakTies(for hands: [Hand]) -> [Hand] {
-        if hands[0].score == Score.PAIR {
+        let type = hands[0].score
+        if type == Score.PAIR {
             return breakTiesPairs(for: hands)
         }
         
