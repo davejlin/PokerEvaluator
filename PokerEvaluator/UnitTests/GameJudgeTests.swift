@@ -9,12 +9,18 @@
 import Foundation
 
 class GameJudgeTests {
+    let mockConsole = MockConsole()
+    let mockErrorHander = MockErrorHandler()
+    
     let gameJudge: GameJudgeProtocol
     let gameScorer: GameScorerProtocol
+    let gameDecoder: GameDecoderProtocol
     
     init() {
         gameJudge = GameJudge()
+    
         gameScorer = GameScorer()
+        gameDecoder = GameDecoder(console: mockConsole, errorHandler: mockErrorHander)
         runTests()
     }
     
@@ -24,67 +30,60 @@ class GameJudgeTests {
         testStraightFlush_WithTiesAndOneWinner()
         testStraightFlush_WithTiesAndThreeWinners()
         
+        testThreeOfAKind()
+        testThreeOfAKind_WithTie()
+        testThreeOfAKind_WithTieAndTwoWinners()
+        
+        testStraight()
+        testStraight_WithTie()
+        testStraight_WithTieAndFourWinners()
+        
+        testFlush()
+        testFlush_WithTie()
+        testFlush_WithTieAndThreeWinners()
+        
+        testPair()
+        testPair_WithTie()
+        testPair_WithTieAndTwoWinners()
+        testPair_WithTieAndFourWinners()
+        
         testHighCard()
         testHighCard_WithTieOnFirstCard()
         testHighCard_WithTieOnFirstTwoCards()
         testHighCard_WithTieOnAllThreeCards()
     }
 
+    // MARK: Straight Flush
+    
     func testStraightFlush() {
-        let card11 = Card(suit: Suit.c, rank: Rank._J)
-        let card12 = Card(suit: Suit.c, rank: Rank._J)
-        let card13 = Card(suit: Suit.c, rank: Rank._Q)
+        let input = [
+            "8",
+            "1 Ac As Ad",
+            "2 Kd Qd Jh",
+            "3 Qc Kc Ad",
+            "4 2s 3s 4s",
+            "5 Ac 3d Ah",
+            "6 4c 3c Ac",
+            "7 Kc Kc Ac",
+            "8 Kd 2c Ah"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._Q)
-        let card22 = Card(suit: Suit.h, rank: Rank._Q)
-        let card23 = Card(suit: Suit.s, rank: Rank._Q)
-        
-        let card31 = Card(suit: Suit.c, rank: Rank._Q)
-        let card32 = Card(suit: Suit.c, rank: Rank._J)
-        let card33 = Card(suit: Suit.d, rank: Rank._K)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._J)
-        let card42 = Card(suit: Suit.s, rank: Rank._Q)
-        let card43 = Card(suit: Suit.s, rank: Rank._K)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
+        let winner = setupGame(with: input)
         
         assert(winner.count == 1, "should find winner")
         assert(winner[0] == 4, "should find straight flush winner")
     }
     
     func testStraightFlush_WithTie() {
-        let card11 = Card(suit: Suit.c, rank: Rank._K)
-        let card12 = Card(suit: Suit.c, rank: Rank._J)
-        let card13 = Card(suit: Suit.c, rank: Rank._Q)
+        let input = [
+            "4",
+            "1 Kc Jc Qc",
+            "2 Qd Qh Qs",
+            "3 Qc Jc Kd",
+            "4 Js Qs Ks"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._Q)
-        let card22 = Card(suit: Suit.h, rank: Rank._Q)
-        let card23 = Card(suit: Suit.s, rank: Rank._Q)
-        
-        let card31 = Card(suit: Suit.c, rank: Rank._Q)
-        let card32 = Card(suit: Suit.c, rank: Rank._J)
-        let card33 = Card(suit: Suit.d, rank: Rank._K)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._J)
-        let card42 = Card(suit: Suit.s, rank: Rank._Q)
-        let card43 = Card(suit: Suit.s, rank: Rank._K)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
+        let winner = setupGame(with: input)
         
         assert(winner.count == 2, "should find winner")
         assert(winner[0] == 1, "should find straight flush winner")
@@ -92,60 +91,30 @@ class GameJudgeTests {
     }
     
     func testStraightFlush_WithTiesAndOneWinner() {
-        let card11 = Card(suit: Suit.c, rank: Rank._K)
-        let card12 = Card(suit: Suit.c, rank: Rank._J)
-        let card13 = Card(suit: Suit.c, rank: Rank._Q)
+        let input = [
+            "4",
+            "1 Kc Jc Qc",
+            "2 Ad Qd Kd",
+            "3 Qh Jh Kh",
+            "4 Ts Js 9s"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._A)
-        let card22 = Card(suit: Suit.d, rank: Rank._Q)
-        let card23 = Card(suit: Suit.d, rank: Rank._K)
-        
-        let card31 = Card(suit: Suit.h, rank: Rank._Q)
-        let card32 = Card(suit: Suit.h, rank: Rank._J)
-        let card33 = Card(suit: Suit.h, rank: Rank._K)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._T)
-        let card42 = Card(suit: Suit.s, rank: Rank._J)
-        let card43 = Card(suit: Suit.s, rank: Rank._9)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
+        let winner = setupGame(with: input)
         
         assert(winner.count == 1, "should find winner")
         assert(winner[0] == 2, "should find straight flush winner")
     }
     
     func testStraightFlush_WithTiesAndThreeWinners() {
-        let card11 = Card(suit: Suit.c, rank: Rank._K)
-        let card12 = Card(suit: Suit.c, rank: Rank._J)
-        let card13 = Card(suit: Suit.c, rank: Rank._Q)
+        let input = [
+            "4",
+            "1 Kc Jc Qc",
+            "2 Jd Qd Kd",
+            "3 Qh Jh Kh",
+            "4 Ts Js 9s"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._J)
-        let card22 = Card(suit: Suit.d, rank: Rank._Q)
-        let card23 = Card(suit: Suit.d, rank: Rank._K)
-        
-        let card31 = Card(suit: Suit.h, rank: Rank._Q)
-        let card32 = Card(suit: Suit.h, rank: Rank._J)
-        let card33 = Card(suit: Suit.h, rank: Rank._K)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._T)
-        let card42 = Card(suit: Suit.s, rank: Rank._J)
-        let card43 = Card(suit: Suit.s, rank: Rank._9)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
+        let winner = setupGame(with: input)
         
         assert(winner.count == 3, "should find winner")
         assert(winner[0] == 1, "should find straight flush winner")
@@ -153,125 +122,298 @@ class GameJudgeTests {
         assert(winner[2] == 3, "should find straight flush winner")
     }
     
+    // MARK: Three of a Kind
+    
+    func testThreeOfAKind() {
+        let input = [
+            "4",
+            "1 As Ac Kh",
+            "2 2c 2d 2s",
+            "3 Ac Qc Kd",
+            "4 Js Ts Ks"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 2, "should find three of a kind winner")
+    }
+    
+    func testThreeOfAKind_WithTie() {
+        let input = [
+            "4",
+            "1 As Ac Kh",
+            "2 2c 2d 2s",
+            "3 3s 3c 3d",
+            "4 Js Ts Ks"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 3, "should find three of a kind winner")
+    }
+    
+    func testThreeOfAKind_WithTieAndTwoWinners() {
+        let input = [
+            "4",
+            "1 3s 3c 3h",
+            "2 2c 2d 2s",
+            "3 Js Ts Ks",
+            "4 3s 3c 3d"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 2, "should find winner")
+        assert(winner[0] == 1, "should find three of a kind winner")
+        assert(winner[1] == 4, "should find three of a kind winner")
+    }
+    
+    // MARK: Straight
+    
+    func testStraight() {
+        let input = [
+            "4",
+            "1 2s 3c 4h",
+            "2 Ac Ad 2s",
+            "3 Td 8d Jd",
+            "4 As Ts Qs"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 1, "should find straight winner")
+    }
+    
+    func testStraight_WithTie() {
+        let input = [
+            "4",
+            "1 2s 3c 4h",
+            "2 Ac Ad 2s",
+            "3 3h 4d 5s",
+            "4 As Ts Qs"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 3, "should find straight winner")
+    }
+    
+    func testStraight_WithTieAndFourWinners() {
+        let input = [
+            "6",
+            "1 Js Qc Th",
+            "2 Qc Td Js",
+            "3 Qh Jd Ks",
+            "4 Jd Qc Ks",
+            "5 Jh Kd Qs",
+            "6 Ks Js Qc"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 4, "should find winner")
+        assert(winner[0] == 3, "should find straight winner")
+        assert(winner[1] == 4, "should find straight winner")
+        assert(winner[2] == 5, "should find straight winner")
+        assert(winner[3] == 6, "should find straight winner")
+    }
+    
+    // MARK: Flush
+    
+    func testFlush() {
+        let input = [
+            "4",
+            "1 Ac Ad Ks",
+            "2 Td 2d 5d",
+            "3 Ah Kd Jd",
+            "4 As Kc Kh"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 2, "should find flush winner")
+    }
+    
+    func testFlush_WithTie() {
+        let input = [
+            "4",
+            "1 Ac Ad Ks",
+            "2 Ks Ts Qs",
+            "3 Ah Kd Kc",
+            "4 3d Ad 2d"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 4, "should find flush winner")
+    }
+    
+    func testFlush_WithTieAndThreeWinners() {
+        let input = [
+            "4",
+            "1 3c 2c 4c",
+            "2 4d 2d 3d",
+            "3 Ah Ad Kc",
+            "4 2s 3s 4s"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 3, "should find winner")
+        assert(winner[0] == 1, "should find flush winner")
+        assert(winner[1] == 2, "should find flush winner")
+        assert(winner[2] == 4, "should find flush winner")
+    }
+    
+    // MARK: Pair
+    
+    func testPair() {
+        let input = [
+            "4",
+            "1 2c 3d Ks",
+            "2 Ts 2s Ah",
+            "3 As 2d 2c",
+            "4 Ah Kc 4h"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 3, "should find pair winner")
+    }
+    
+    func testPair_WithTie() {
+        let input = [
+            "4",
+            "1 2c 3d Ks",
+            "2 2s 2s Ah",
+            "3 Ks 2d 2c",
+            "4 Ah Kc 4h"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 2, "should find pair winner")
+    }
+    
+    func testPair_WithTieAndTwoWinners() {
+        let input = [
+            "4",
+            "1 2c 3d 3s",
+            "2 2s 2s Ah",
+            "3 3s 2d 3c",
+            "4 Ah Kc 4h"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 2, "should find winner")
+        assert(winner[0] == 1, "should find pair winner")
+        assert(winner[1] == 3, "should find pair winner")
+    }
+    
+    func testPair_WithTieAndFourWinners() {
+        let input = [
+            "8",
+            "1 4c Ad 4s",
+            "2 As 5d 5c",
+            "3 Ah 2c 2h",
+            "4 2s 2c Ah",
+            "5 5s As 5h",
+            "6 3s Ad 3c",
+            "7 5s 5d As",
+            "8 Ac 5s 5h"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 4, "should find winner")
+        assert(winner[0] == 2, "should find pair winner")
+        assert(winner[1] == 5, "should find pair winner")
+        assert(winner[2] == 7, "should find pair winner")
+        assert(winner[3] == 8, "should find pair winner")
+    }
+    
+    // MARK: High Card
+    
     func testHighCard() {
-        let card11 = Card(suit: Suit.c, rank: Rank._K)
-        let card12 = Card(suit: Suit.s, rank: Rank._T)
-        let card13 = Card(suit: Suit.d, rank: Rank._2)
+        let input = [
+            "4",
+            "1 Kc Ts 2d",
+            "2 Qd 3h As",
+            "3 4c 2c 9d",
+            "4 Qs Th Kc"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._Q)
-        let card22 = Card(suit: Suit.h, rank: Rank._3)
-        let card23 = Card(suit: Suit.s, rank: Rank._A)
-        
-        let card31 = Card(suit: Suit.c, rank: Rank._4)
-        let card32 = Card(suit: Suit.c, rank: Rank._2)
-        let card33 = Card(suit: Suit.d, rank: Rank._9)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._Q)
-        let card42 = Card(suit: Suit.h, rank: Rank._T)
-        let card43 = Card(suit: Suit.c, rank: Rank._K)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
+        let winner = setupGame(with: input)
         
         assert(winner.count == 1, "should find winner")
         assert(winner[0] == 2, "should find high card winner")
     }
     
     func testHighCard_WithTieOnFirstCard() {
-        let card11 = Card(suit: Suit.c, rank: Rank._K)
-        let card12 = Card(suit: Suit.s, rank: Rank._T)
-        let card13 = Card(suit: Suit.d, rank: Rank._2)
+        let input = [
+            "4",
+            "1 Kc Ts 2d",
+            "2 Qd 3h As",
+            "3 4c 2c 9d",
+            "4 Js Ah Kc"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._Q)
-        let card22 = Card(suit: Suit.h, rank: Rank._3)
-        let card23 = Card(suit: Suit.s, rank: Rank._A)
-        
-        let card31 = Card(suit: Suit.c, rank: Rank._4)
-        let card32 = Card(suit: Suit.c, rank: Rank._2)
-        let card33 = Card(suit: Suit.d, rank: Rank._9)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._J)
-        let card42 = Card(suit: Suit.h, rank: Rank._A)
-        let card43 = Card(suit: Suit.c, rank: Rank._K)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
+        let winner = setupGame(with: input)
         
         assert(winner.count == 1, "should find winner")
         assert(winner[0] == 4, "should find high card winner")
     }
     
-    
     func testHighCard_WithTieOnFirstTwoCards() {
-        let card11 = Card(suit: Suit.c, rank: Rank._K)
-        let card12 = Card(suit: Suit.s, rank: Rank._T)
-        let card13 = Card(suit: Suit.d, rank: Rank._2)
+        let input = [
+            "4",
+            "1 Kc Ts 2d",
+            "2 5d 3h As",
+            "3 4c Ac 5d",
+            "4 Js 2h Kc"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._5)
-        let card22 = Card(suit: Suit.h, rank: Rank._3)
-        let card23 = Card(suit: Suit.s, rank: Rank._A)
-        
-        let card31 = Card(suit: Suit.c, rank: Rank._4)
-        let card32 = Card(suit: Suit.c, rank: Rank._A)
-        let card33 = Card(suit: Suit.d, rank: Rank._5)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._J)
-        let card42 = Card(suit: Suit.h, rank: Rank._2)
-        let card43 = Card(suit: Suit.c, rank: Rank._K)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
+        let winner = setupGame(with: input)
         
         assert(winner.count == 1, "should find winner")
         assert(winner[0] == 3, "should find high card winner")
     }
     
     func testHighCard_WithTieOnAllThreeCards() {
-        let card11 = Card(suit: Suit.c, rank: Rank._3)
-        let card12 = Card(suit: Suit.s, rank: Rank._9)
-        let card13 = Card(suit: Suit.d, rank: Rank._J)
+        let input = [
+            "4",
+            "1 3c 9s Jd",
+            "2 5d 3h Qs",
+            "3 Kc 2c Td",
+            "4 Ts 2h Kc"
+        ]
         
-        let card21 = Card(suit: Suit.d, rank: Rank._5)
-        let card22 = Card(suit: Suit.h, rank: Rank._3)
-        let card23 = Card(suit: Suit.s, rank: Rank._Q)
+        let winner = setupGame(with: input)
         
-        let card31 = Card(suit: Suit.c, rank: Rank._K)
-        let card32 = Card(suit: Suit.c, rank: Rank._2)
-        let card33 = Card(suit: Suit.d, rank: Rank._T)
-        
-        let card41 = Card(suit: Suit.s, rank: Rank._T)
-        let card42 = Card(suit: Suit.h, rank: Rank._2)
-        let card43 = Card(suit: Suit.c, rank: Rank._K)
-        
-        let hand1 = Hand(id: 1, cards: [card11, card12, card13].sorted())
-        let hand2 = Hand(id: 2, cards: [card21, card22, card23].sorted())
-        let hand3 = Hand(id: 3, cards: [card31, card32, card33].sorted())
-        let hand4 = Hand(id: 4, cards: [card41, card42, card43].sorted())
-        
-        var hands = [hand1, hand2, hand3, hand4]
-        gameScorer.score(of: &hands)
-        let winner = gameJudge.judge(for: hands)
-
         assert(winner.count == 2, "should find winner")
         assert(winner[0] == 3, "should find high card winner")
         assert(winner[1] == 4, "should find high card winner")
+    }
+    
+    private func setupGame(with input: [String]) -> [Int] {
+        mockConsole.stringsToReturn = []
+        mockConsole.index = -1
+        
+        for string in input {
+            mockConsole.stringsToReturn.append(string)
+        }
+        
+        var game =  gameDecoder.decodeGameFromConsoleInput()!
+        gameScorer.score(of: &game)
+        return gameJudge.judge(for: game)
     }
 }

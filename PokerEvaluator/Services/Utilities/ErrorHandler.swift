@@ -21,6 +21,7 @@ class ErrorHandler: ErrorHandlerProtocol {
 
 struct Error {
     static let ID = "malformed or missing id"
+    static let ID_NOT_UNIQUE = "more than one player with same id"
     static let CARDS = "malformed or missing cards"
     static let CARDS_NUMBER =  "hand does not have 3 cards"
     static let SUIT_NONE = "card has no suit"

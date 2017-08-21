@@ -44,20 +44,28 @@ class GameJudge: GameJudgeProtocol {
     }
     
     private func breakTies(for hands: [Hand]) -> [Hand] {
-        let nCards = hands[0].cards.count
-        var stepSizeThroughCards = 1
-        
         if hands[0].score == Score.PAIR {
-            stepSizeThroughCards = 2
+            return breakTiesPairs(for: hands)
         }
         
-        let rangeCards = stride(from:0, to: nCards, by: stepSizeThroughCards)
         var winners = hands
         
-        for iCard in rangeCards {
+        for iCard in 0..<hands[0].cards.count {
             winners = findWinners(in: winners, of: iCard)
             if winners.count == 1 { return winners }
         }
+        
+        return winners
+    }
+    
+    private func breakTiesPairs(for hands: [Hand]) -> [Hand] {
+        let pairRanks = getRanks(for: hands, with: { $0 == 2 } )
+        var winners = findWinners(in: hands, with: pairRanks)
+        
+        if winners.count == 1 { return winners }
+
+        let nonPairRanks = getRanks(for: winners, with: { $0 == 1 } )
+        winners = findWinners(in: winners, with: nonPairRanks)
         
         return winners
     }
@@ -67,10 +75,29 @@ class GameJudge: GameJudgeProtocol {
         var winners = [hands[0]]
         
         for iHand in 1..<hands.count {
-            let rank = hands[iHand].cards[iCard].rank
+            let hand = hands[iHand]
+            let rank = hand.cards[iCard].rank
             
             if rank > topRank {
-                topRank = hands[iHand].cards[iCard].rank
+                topRank = rank
+                winners = [hand]
+            } else if rank == topRank {
+                winners.append(hand)
+            }
+        }
+        
+        return winners
+    }
+    
+    private func findWinners(in hands:[Hand], with ranks: [Rank]) -> [Hand] {
+        var topRank = ranks[0]
+        var winners = [hands[0]]
+        
+        for iHand in 1..<hands.count {
+            let rank = ranks[iHand]
+            
+            if rank > topRank {
+                topRank = rank
                 winners = [hands[iHand]]
             } else if rank == topRank {
                 winners.append(hands[iHand])
@@ -78,5 +105,26 @@ class GameJudge: GameJudgeProtocol {
         }
         
         return winners
+    }
+    
+    private func getRanks(for hands: [Hand], with comparitor: (Int) -> Bool) -> [Rank] {
+        var pairRank = [[Rank:Int]]()
+        
+        hands.forEach { hand in
+            var rankCount = [Rank:Int]()
+            hand.cards.forEach { rankCount[$0.rank] = (rankCount[$0.rank] ?? 0) + 1 }
+            pairRank.append(rankCount)
+        }
+        
+        var ranks = [Rank]()
+        pairRank.forEach { rankDict in
+            for (key, value) in rankDict {
+                if comparitor(value) {
+                    ranks.append(key)
+                }
+            }
+        }
+        
+        return ranks
     }
 }

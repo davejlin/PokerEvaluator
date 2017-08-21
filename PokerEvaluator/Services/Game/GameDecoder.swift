@@ -38,16 +38,21 @@ class GameDecoder: GameDecoderProtocol {
     }
     
     private func decodeGame(with nHands: Int) -> [Hand] {
-        var arr = [Hand]()
+        var hands = [Hand]()
         for _ in 0..<nHands {
             let data = console.readConsoleLine()!
                 .components(separatedBy: " ")
             
             if let hand = decodeHand(from: data) {
-                arr.append(hand)
+                if hands
+                    .filter({ $0.id == hand.id })
+                    .count > 0 {
+                    errorHandler.create(with: Error.ID_NOT_UNIQUE)
+                }
+                hands.append(hand)
             }
         }
-        return arr
+        return hands
     }
     
     private func decodeHand(from data: [String]) -> Hand? {

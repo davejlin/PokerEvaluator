@@ -20,6 +20,7 @@ class GameDecoderTests {
     
     func runTests() {
         testDecodeGame_SunnyDay()
+        testDecodeGame_InvalidNumberOfHands()
         testDecodeGame_InvalidID()
         testDecodeGame_NoCards()
         testDecodeGame_LessThanThreeCards()
@@ -32,21 +33,21 @@ class GameDecoderTests {
     }
     
     func testDecodeGame_SunnyDay() {
-        reset()
-        
-        let input1 = "0 Tc As 2d"
-        let input2 = "1 4c Kd Js"
-        
-        mockConsole.stringsToReturn.append("2")
-        mockConsole.stringsToReturn.append(input1)
-        mockConsole.stringsToReturn.append(input2)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
-        
-        guard let hand1 = game?[0] else {
-            assertionFailure("failed to create hand")
+        let input = [
+            "2",
+            "0 Tc As 2d",
+            "1 4c Kd Js"
+        ]
+    
+        guard let game = setupGame(with: input) else {
+            assertionFailure("should have created game")
             return
         }
+        
+        assert(game.count == 2, "should have created hands")
+        
+        let hand1 = game[0]
+        let hand2 = game[1]
         
         assert(hand1.id == 0, "should have id")
         assert(hand1.cards[0].rank == Rank._A, "should be sorted by rank")
@@ -55,11 +56,6 @@ class GameDecoderTests {
         assert(hand1.cards[1].suit == Suit.c, "should have suit")
         assert(hand1.cards[2].rank == Rank._2, "should be sorted by rank")
         assert(hand1.cards[2].suit == Suit.d, "should have suit")
-        
-        guard let hand2 = game?[1] else {
-            assertionFailure("failed to create hand")
-            return
-        }
         
         assert(hand2.id == 1, "should have id")
         assert(hand2.cards[0].rank == Rank._K, "should be sorted by rank")
@@ -70,27 +66,49 @@ class GameDecoderTests {
         assert(hand2.cards[2].suit == Suit.c, "should have suit")
     }
     
+    func testDecodeGame_InvalidNumberOfHands() {
+        let input = [
+            "a"
+        ]
+        
+        let game = setupGame(with: input)
+        
+        assert(game == nil, "should handle invalid id with nil")
+        assert(mockErrorHander.errorMessages[0] == Error.HANDS_INVALID, "should have error message")
+    }
+    
     func testDecodeGame_InvalidID() {
-        reset()
+        let input = [
+            "1",
+            "a"
+        ]
         
-        let input = "a"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle invalid id with nil")
         assert(mockErrorHander.errorMessages[0] == Error.ID, "should have error message")
     }
+
+    func testDecodeGame_NotUniqueID() {
+        let input = [
+            "1",
+            "1 Tc 8d 2s",
+            "1 2h 3h 4h"
+        ]
+        
+        let game = setupGame(with: input)
+        
+        assert(game == nil, "should handle not unique id with nil")
+        assert(mockErrorHander.errorMessages[0] == Error.ID_NOT_UNIQUE, "should have error message")
+    }
     
     func testDecodeGame_NoCards() {
-        reset()
+        let input = [
+            "1",
+            "0"
+        ]
         
-        let input = "0"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle no cards with nil")
         assert(mockErrorHander.errorMessages[0] == Error.CARDS_NUMBER, "should have error message")
@@ -98,13 +116,12 @@ class GameDecoderTests {
     }
     
     func testDecodeGame_LessThanThreeCards() {
-        reset()
+        let input = [
+            "1",
+            "0 Tc"
+        ]
         
-        let input = "0 Tc"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle less than 3 cards with nil")
         assert(mockErrorHander.errorMessages[0] == Error.CARDS_NUMBER, "should have error message")
@@ -112,13 +129,12 @@ class GameDecoderTests {
     }
     
     func testDecodeGame_MoreThanThreeCards() {
-        reset()
+        let input = [
+            "1",
+            "0 Tc As 2d 9h"
+        ]
         
-        let input = "0 Tc As 2d 9h"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle more than 3 cards with nil")
         assert(mockErrorHander.errorMessages[0] == Error.CARDS_NUMBER, "should have error message")
@@ -126,13 +142,12 @@ class GameDecoderTests {
     }
     
     func testDecodeGame_InvalidSuit() {
-        reset()
+        let input = [
+            "1",
+            "0 Tc As 2e"
+        ]
         
-        let input = "0 Tc As 2e"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle invalid suit with nil")
         assert(mockErrorHander.errorMessages[0] == Error.SUIT_INVALID, "should have error message")
@@ -141,13 +156,12 @@ class GameDecoderTests {
     }
     
     func testDecodeGame_NoSuit() {
-        reset()
+        let input = [
+            "1",
+            "0 Tc As 2"
+        ]
         
-        let input = "0 Tc As 2"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle no suit with nil")
         assert(mockErrorHander.errorMessages[0] == Error.SUIT_INVALID, "should have error message")
@@ -156,13 +170,12 @@ class GameDecoderTests {
     }
     
     func testDecodeGame_InvalidRank() {
-        reset()
+        let input = [
+            "1",
+            "0 Tc As 1c"
+        ]
         
-        let input = "0 Tc As 1c"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle invalid rank with nil")
         assert(mockErrorHander.errorMessages[0] == Error.RANK_INVALID, "should have error message")
@@ -171,13 +184,12 @@ class GameDecoderTests {
     }
     
     func testDecodeGame_NoRank() {
-        reset()
+        let input = [
+            "1",
+            "0 Tc As c"
+        ]
         
-        let input = "0 Tc As c"
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle no rank with nil")
         assert(mockErrorHander.errorMessages[0] == Error.RANK_INVALID, "should have error message")
@@ -186,13 +198,12 @@ class GameDecoderTests {
     }
 
     func testDecodeGame_EmptyCardEntry() {
-        reset()
+        let input = [
+            "1",
+            "0 Tc As  "
+        ]
         
-        let input = "0 Tc As  "
-        mockConsole.stringsToReturn.append("1")
-        mockConsole.stringsToReturn.append(input)
-        
-        let game = gameDecoder.decodeGameFromConsoleInput()
+        let game = setupGame(with: input)
         
         assert(game == nil, "should handle empty card data with nil")
         assert(mockErrorHander.errorMessages[0] == Error.SUIT_NONE, "should have error message")
@@ -204,5 +215,15 @@ class GameDecoderTests {
         mockConsole.stringsToReturn = []
         mockConsole.index = -1
         mockErrorHander.errorMessages = []
+    }
+    
+    private func setupGame(with input: [String]) -> [Hand]? {
+        reset()
+        
+        for string in input {
+            mockConsole.stringsToReturn.append(string)
+        }
+        
+        return gameDecoder.decodeGameFromConsoleInput()
     }
 }
