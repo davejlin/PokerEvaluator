@@ -59,6 +59,8 @@ class GameJudgeTests {
         testHighCard_WithTieOnFirstCard()
         testHighCard_WithTieOnFirstTwoCards()
         testHighCard_WithTieOnAllThreeCards()
+        
+        testOnePlayer()
     }
 
     // MARK: Straight Flush
@@ -561,6 +563,20 @@ class GameJudgeTests {
         assert(winner.count == 2, "should find winner")
         assert(winner[0] == 3, "should find high card winner")
         assert(winner[1] == 4, "should find high card winner")
+    }
+    
+    // MARK: Misc
+    
+    func testOnePlayer() {
+        let input = [
+            "1",
+            "1 3c 9s Jd"
+        ]
+        
+        let winner = setupGame(with: input)
+        
+        assert(winner.count == 1, "should find winner")
+        assert(winner[0] == 1, "should find winner")
     }
     
     // MARK: Helper methods
