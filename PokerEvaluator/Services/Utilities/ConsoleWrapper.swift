@@ -20,8 +20,6 @@ class ConsoleWrapper: ConsoleProtocol {
     }
 
     func printOut(_ arr: [Int]) {
-        for i in arr {
-            print(i, terminator: " ")
-        }
+        arr.forEach{ print($0, terminator: " ") }
     }
 }

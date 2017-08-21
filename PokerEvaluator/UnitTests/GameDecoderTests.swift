@@ -22,6 +22,7 @@ class GameDecoderTests {
         testDecodeGame_SunnyDay()
         testDecodeGame_InvalidNumberOfHands()
         testDecodeGame_InvalidID()
+        testDecodeGame_NotUniqueID()
         testDecodeGame_NoCards()
         testDecodeGame_LessThanThreeCards()
         testDecodeGame_MoreThanThreeCards()
@@ -66,6 +67,8 @@ class GameDecoderTests {
         assert(hand2.cards[2].suit == Suit.c, "should have suit")
     }
     
+    // MARK: Error cases
+    
     func testDecodeGame_InvalidNumberOfHands() {
         let input = [
             "a"
@@ -91,7 +94,7 @@ class GameDecoderTests {
 
     func testDecodeGame_NotUniqueID() {
         let input = [
-            "1",
+            "2",
             "1 Tc 8d 2s",
             "1 2h 3h 4h"
         ]
@@ -210,6 +213,8 @@ class GameDecoderTests {
         assert(mockErrorHander.errorMessages[1] == Error.CARDS_NUMBER, "should have error message")
         assert(mockErrorHander.errorMessages[2] == Error.CARDS, "should have error message")
     }
+    
+    // MARK: Helper methods
     
     func reset() {
         mockConsole.stringsToReturn = []

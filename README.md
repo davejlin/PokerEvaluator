@@ -108,7 +108,7 @@ How to compile using Xcode and run the test script
 4. In the navigator window (far left pane), click on the Products folder to reveal the PokerEvaluator executable
 5. Right click on it and select "Show in Finder"
 6. Copy or move the PokerEvaluator executable to the Tests directory where the run_tests Python script is
-7. From a terminal, enter the command: ./run_tests "./PokerEvaluator"
+7. From a terminal, enter the command: `./run_tests "./PokerEvaluator"`
 
 Limitations
 -----------

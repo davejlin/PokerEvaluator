@@ -27,7 +27,7 @@ class GameDecoder: GameDecoderProtocol {
             return nil
         }
         
-        let game = decodeGame(with: nHands)
+        guard let game = decodeGame(with: nHands) else { return nil }
         
         guard nHands == game.count else {
             errorHandler.create(with: Error.HANDS_MISMATCH)
@@ -37,7 +37,7 @@ class GameDecoder: GameDecoderProtocol {
         return game
     }
     
-    private func decodeGame(with nHands: Int) -> [Hand] {
+    private func decodeGame(with nHands: Int) -> [Hand]? {
         var hands = [Hand]()
         for _ in 0..<nHands {
             let data = console.readConsoleLine()!
@@ -48,6 +48,7 @@ class GameDecoder: GameDecoderProtocol {
                     .filter({ $0.id == hand.id })
                     .count > 0 {
                     errorHandler.create(with: Error.ID_NOT_UNIQUE)
+                    return nil
                 }
                 hands.append(hand)
             }

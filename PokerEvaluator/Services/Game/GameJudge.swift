@@ -9,11 +9,11 @@
 import Foundation
 
 protocol GameJudgeProtocol {
-    func judge(for game: [Hand]) -> [Int]
+    func getSortedWinnerIds(for game: [Hand]) -> [Int]
 }
 
 class GameJudge: GameJudgeProtocol {
-    func judge(for game: [Hand]) -> [Int] {
+    func getSortedWinnerIds(for game: [Hand]) -> [Int] {
         let sortedGameByScore = game.sorted(by: { $0.score > $1.score } )
         let topHands = findTopHandsByScore(for: sortedGameByScore)
         

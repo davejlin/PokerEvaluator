@@ -34,6 +34,8 @@ class GameScorerTests {
         testCalculateScore_HighCard()
     }
     
+    // MARK: Straight Flush
+    
     func testCalculateScore_StraightFlush() {
         let input = [
             "4",
@@ -84,6 +86,8 @@ class GameScorerTests {
             assert(hand.score == Score.STRAIGHT_FLUSH_ACE_LOW)
         }
     }
+    
+    // MARK: Straight
     
     func testCalculateScore_Straight() {
         let input = [
@@ -136,6 +140,8 @@ class GameScorerTests {
         }
     }
     
+    // MARK: Flush
+    
     func testCalculateScore_Flush() {
         let input = [
             "4",
@@ -152,6 +158,8 @@ class GameScorerTests {
             assert(hand.score == Score.FLUSH)
         }
     }
+    
+    // MARK: Three of a Kind
     
     func testCalculateScore_ThreeOfAKind() {
         let input = [
@@ -186,6 +194,8 @@ class GameScorerTests {
             assert(hand.score == Score.THREE_OF_A_KIND)
         }
     }
+    
+    // MARK: Pair
 
     func testCalculateScore_Pair() {
         let input = [
@@ -221,6 +231,8 @@ class GameScorerTests {
         }
     }
 
+    // MARK: High Card
+    
     func testCalculateScore_HighCard() {
         let input = [
             "4",
@@ -237,6 +249,8 @@ class GameScorerTests {
             assert(hand.score == Score.HIGH_CARD)
         }
     }
+    
+    // MARK: Helper methods
     
     private func setupGame(with input: [String]) -> [Hand] {
         mockConsole.stringsToReturn = []

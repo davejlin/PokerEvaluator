@@ -26,7 +26,7 @@ class GameManager: GameManagerProtocol {
     func start() {
         guard var game = getGame() else { return }
         gameScorer.score(of: &game)
-        let winnerIDs = gameJudge.judge(for: game)
+        let winnerIDs = gameJudge.getSortedWinnerIds(for: game)
         console.printOut(winnerIDs)
     }
     

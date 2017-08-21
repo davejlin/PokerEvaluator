@@ -565,6 +565,8 @@ class GameJudgeTests {
         assert(winner[1] == 4, "should find high card winner")
     }
     
+    // MARK: Helper methods
+    
     private func setupGame(with input: [String]) -> [Int] {
         mockConsole.stringsToReturn = []
         mockConsole.index = -1
@@ -575,6 +577,6 @@ class GameJudgeTests {
         
         var game =  gameDecoder.decodeGameFromConsoleInput()!
         gameScorer.score(of: &game)
-        return gameJudge.judge(for: game)
+        return gameJudge.getSortedWinnerIds(for: game)
     }
 }
