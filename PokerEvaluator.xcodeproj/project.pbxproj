@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181982801F4B37EF00D7C6AD /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819827F1F4B37EF00D7C6AD /* DIContainer.swift */; };
+		181982821F4B3A0B00D7C6AD /* MockGameDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181982811F4B3A0B00D7C6AD /* MockGameDecoder.swift */; };
+		181982841F4B3A2300D7C6AD /* MockGameJudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181982831F4B3A2300D7C6AD /* MockGameJudge.swift */; };
+		181982861F4B3A3800D7C6AD /* MockGameScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181982851F4B3A3800D7C6AD /* MockGameScorer.swift */; };
+		181982881F4B3BAA00D7C6AD /* GameManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181982871F4B3BAA00D7C6AD /* GameManagerTests.swift */; };
 		1852DC931F49DEAD0099BD70 /* GameScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852DC921F49DEAD0099BD70 /* GameScorer.swift */; };
 		1852DC951F49ED830099BD70 /* GameScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852DC941F49ED830099BD70 /* GameScorerTests.swift */; };
 		1852DC971F4A084C0099BD70 /* ConsoleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852DC961F4A084C0099BD70 /* ConsoleWrapper.swift */; };
@@ -38,6 +43,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1819827F1F4B37EF00D7C6AD /* DIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DIContainer.swift; path = Services/Utilities/DIContainer.swift; sourceTree = "<group>"; };
+		181982811F4B3A0B00D7C6AD /* MockGameDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockGameDecoder.swift; path = UnitTests/Mocks/MockGameDecoder.swift; sourceTree = "<group>"; };
+		181982831F4B3A2300D7C6AD /* MockGameJudge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockGameJudge.swift; path = UnitTests/Mocks/MockGameJudge.swift; sourceTree = "<group>"; };
+		181982851F4B3A3800D7C6AD /* MockGameScorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockGameScorer.swift; path = UnitTests/Mocks/MockGameScorer.swift; sourceTree = "<group>"; };
+		181982871F4B3BAA00D7C6AD /* GameManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameManagerTests.swift; path = UnitTests/GameManagerTests.swift; sourceTree = "<group>"; };
 		1852DC921F49DEAD0099BD70 /* GameScorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScorer.swift; path = Services/Game/GameScorer.swift; sourceTree = "<group>"; };
 		1852DC941F49ED830099BD70 /* GameScorerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScorerTests.swift; path = UnitTests/GameScorerTests.swift; sourceTree = "<group>"; };
 		1852DC961F4A084C0099BD70 /* ConsoleWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConsoleWrapper.swift; path = Services/Utilities/ConsoleWrapper.swift; sourceTree = "<group>"; };
@@ -72,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				1852DC961F4A084C0099BD70 /* ConsoleWrapper.swift */,
+				1819827F1F4B37EF00D7C6AD /* DIContainer.swift */,
 				18FD60151F49B91000089DC3 /* ErrorHandler.swift */,
 			);
 			name = Utilities;
@@ -141,6 +152,7 @@
 				18FD601A1F49C4D700089DC3 /* SortTests.swift */,
 				18FD601C1F49CC0F00089DC3 /* GameDecoderTests.swift */,
 				1852DCA01F4A30DA0099BD70 /* GameJudgeTests.swift */,
+				181982871F4B3BAA00D7C6AD /* GameManagerTests.swift */,
 				1852DC941F49ED830099BD70 /* GameScorerTests.swift */,
 			);
 			name = UnitTests;
@@ -151,6 +163,9 @@
 			children = (
 				1852DC981F4A095C0099BD70 /* MockConsole.swift */,
 				18FD601F1F49CD7700089DC3 /* MockErrorHandler.swift */,
+				181982811F4B3A0B00D7C6AD /* MockGameDecoder.swift */,
+				181982831F4B3A2300D7C6AD /* MockGameJudge.swift */,
+				181982851F4B3A3800D7C6AD /* MockGameScorer.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -219,12 +234,17 @@
 				18FD60191F49C44E00089DC3 /* UnitTests.swift in Sources */,
 				1852DC9D1F4A10950099BD70 /* GameManager.swift in Sources */,
 				1852DC931F49DEAD0099BD70 /* GameScorer.swift in Sources */,
+				181982861F4B3A3800D7C6AD /* MockGameScorer.swift in Sources */,
+				181982801F4B37EF00D7C6AD /* DIContainer.swift in Sources */,
+				181982881F4B3BAA00D7C6AD /* GameManagerTests.swift in Sources */,
 				1852DC951F49ED830099BD70 /* GameScorerTests.swift in Sources */,
+				181982841F4B3A2300D7C6AD /* MockGameJudge.swift in Sources */,
 				18DDBE511F49050B004A463C /* GameDecoder.swift in Sources */,
 				18FD60161F49B91000089DC3 /* ErrorHandler.swift in Sources */,
 				1852DC991F4A095C0099BD70 /* MockConsole.swift in Sources */,
 				18FD601D1F49CC0F00089DC3 /* GameDecoderTests.swift in Sources */,
 				1852DC971F4A084C0099BD70 /* ConsoleWrapper.swift in Sources */,
+				181982821F4B3A0B00D7C6AD /* MockGameDecoder.swift in Sources */,
 				1852DCA11F4A30DA0099BD70 /* GameJudgeTests.swift in Sources */,
 				18FD60101F490AFE00089DC3 /* Hand.swift in Sources */,
 				18FD60121F490BB200089DC3 /* Card.swift in Sources */,

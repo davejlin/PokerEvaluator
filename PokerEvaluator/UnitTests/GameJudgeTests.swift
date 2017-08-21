@@ -11,14 +11,12 @@ import Foundation
 class GameJudgeTests {
     let mockConsole = MockConsole()
     let mockErrorHander = MockErrorHandler()
-    
     let gameJudge: GameJudgeProtocol
     let gameScorer: GameScorerProtocol
     let gameDecoder: GameDecoderProtocol
     
     init() {
         gameJudge = GameJudge()
-    
         gameScorer = GameScorer()
         gameDecoder = GameDecoder(console: mockConsole, errorHandler: mockErrorHander)
         runTests()

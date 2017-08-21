@@ -19,6 +19,7 @@ class GameDecoderTests {
     }
     
     func runTests() {
+        tesDecodeGameReadsFromConsole()
         testDecodeGame_SunnyDay()
         testDecodeGame_InvalidNumberOfHands()
         testDecodeGame_InvalidID()
@@ -31,6 +32,12 @@ class GameDecoderTests {
         testDecodeGame_InvalidRank()
         testDecodeGame_NoRank()
         testDecodeGame_EmptyCardEntry()
+    }
+    
+    func tesDecodeGameReadsFromConsole() {
+        let input = [""]
+        let _ = setupGame(with: input)
+        assert(mockConsole.isReadCalled == true, "should call read")
     }
     
     func testDecodeGame_SunnyDay() {

@@ -13,14 +13,19 @@ protocol GameManagerProtocol {
 }
 
 class GameManager: GameManagerProtocol {
-    let errorHandler: ErrorHandlerProtocol = ErrorHandler()
-    let console: ConsoleProtocol = ConsoleWrapper()
+    let console: ConsoleProtocol
     let gameDecoder: GameDecoderProtocol
-    let gameScorer: GameScorerProtocol = GameScorer()
-    let gameJudge: GameJudgeProtocol = GameJudge()
+    let gameScorer: GameScorerProtocol
+    let gameJudge: GameJudgeProtocol
     
-    init() {
-        gameDecoder = GameDecoder(console: console, errorHandler: errorHandler)
+    init(console: ConsoleProtocol,
+         gameDecoder: GameDecoderProtocol,
+         gameScorer: GameScorerProtocol,
+         gameJudge: GameJudgeProtocol) {
+        self.console = console
+        self.gameDecoder = gameDecoder
+        self.gameScorer = gameScorer
+        self.gameJudge = gameJudge
     }
     
     func start() {
@@ -31,7 +36,6 @@ class GameManager: GameManagerProtocol {
     }
     
     private func getGame() -> [Hand]? {
-        let gameDecoder = GameDecoder(console: console, errorHandler: errorHandler)
         return gameDecoder.decodeGameFromConsoleInput()
     }
 }

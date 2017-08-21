@@ -9,7 +9,7 @@
 import Foundation
 
 func main() {
-    let gameManager: GameManagerProtocol = GameManager()
+    let gameManager: GameManagerProtocol = DIContainer.resolve()
     gameManager.start()
 }
 

@@ -15,6 +15,7 @@ class UnitTests {
     
     func runTests() {
         sortTests()
+        gameManagerTests()
         gameDecoderTests()
         gameJudgeTests()
         gameScorerTests()
@@ -22,6 +23,10 @@ class UnitTests {
     
     func sortTests() {
         let _ = SortTests()
+    }
+    
+    func gameManagerTests() {
+        let _ = GameManagerTests()
     }
     
     func gameDecoderTests() {
