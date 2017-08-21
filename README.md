@@ -126,10 +126,13 @@ High Level Design
 Models:
 
 `Hand`: with player id, the cards, and score
+
 `Card`: with `Suit` and `Rank` as enums
 
 `Suit`: string enum of possible suits
+
 `Rank`: int enum of possible ranks
+
 `Score`: int constants for score value of hand types
 
 `Error`: string constants for error messages
@@ -146,7 +149,9 @@ Services:
 Utilites:
 
 `ConsoleWrapper`: console wrapper for input/output
+
 `DIContainer`: functions as the dependency injection container
+
 `ErrorHandler`: handles errors (prints out error message and kills execution)
 
 
