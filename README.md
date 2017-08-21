@@ -123,7 +123,7 @@ Program Entry Point
 High Level Design
 -----------------
 
-###Models
+### Models
 
 `Hand`: with player id, the cards, and score
 
@@ -137,7 +137,7 @@ High Level Design
 
 `Error`: string constants for error messages
 
-###Services
+### Services
 
 `GameManger` acts as the main executor of the high level logic of the program.  The execution flow is summarized in the `start()` method:  
 
@@ -146,7 +146,7 @@ High Level Design
 * Detemine the winner(s), and break ties if necessary (`GameJudge`)
 * Print out the winner(s) (`ConsoleWrapper`)
 
-###Utilites
+### Utilites
 
 `ConsoleWrapper`: console wrapper for input/output
 
