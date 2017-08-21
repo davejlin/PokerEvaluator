@@ -95,51 +95,55 @@ The exception to this comes when comparing pairs. If two hands are both a pair, 
 Using the test runner
 ----------------------
 
-The test runner in PokerEvaluator/Tests/ can be used to end-to-end test the program with 20 sample tests and 10 sample error tests.
+The test runner in `PokerEvaluator/Tests/` can be used to end-to-end test the program with 20 sample tests and 10 sample error tests.
 
 To run the tests, first compile the console application in Xcode (directions below), copy the executable to the Tests folder, and run the `run_tests` python script using `./run_tests "./PokerEvaluator"`.
 
 How to compile using Xcode and run the test script
 --------------------------------------------------
 
-1. Download Xcode 8.3.3 (Swift 3) from developer.apple.com
-2. In Xcode, open the project file PokerEvaluator.xcodeproj
-3. Run the program (Command-R), or build (Command-B)
-4. In the navigator window (far left pane), click on the Products folder to reveal the PokerEvaluator executable
-5. Right click on it and select "Show in Finder"
-6. Copy or move the PokerEvaluator executable to the Tests directory where the run_tests Python script is
+1. Download [Xcode 8.3.3 (Swift 3)](https://developer.apple.com/xcode/)
+2. In Xcode, open the project file `PokerEvaluator.xcodeproj`
+3. Run `Command-R`, or build `Command-B` the program
+4. In the navigator window (far left pane), click on the `Products` folder to reveal the PokerEvaluator executable
+5. Right click on it and select `Show in Finder`
+6. Copy or move the PokerEvaluator executable to the `Tests` directory where the run_tests Python script is
 7. From a terminal, enter the command: `./run_tests "./PokerEvaluator"`
 
 Limitations
 -----------
 
-Does not verify hands consists of cards from a single deck.  That is, unlimited identical cards are allowed, as may occur when playing with multiple decks.
+Currently, the program does not first verify if hands consists of cards from a single deck.  That is, unlimited identical cards are allowed, as may occur when playing with an unlimited number of multiple decks.
 
 Program Entry Point
 -------------------
 
-PokerEvaluator/main.swift
+`PokerEvaluator/main.swift`
 
 High Level Design
 -----------------
 
+Services:
+
 GameManger acts as the depenency manager and executor of the logic of the program.  The execution flow is summarized in the start() method:  
 
-* Get the game from console input (GameDecoder, ConsoleWrapper)
-* Score the hands (GameScorer)
-* Detemine the winner(s), and break ties if necessary (GameJudge)
-* Print out the winner(s) (ConsoleWrapper)
+* Get the game from console input (`GameDecoder`, `ConsoleWrapper`)
+* Score the hands (`GameScorer`)
+* Detemine the winner(s), and break ties if necessary (`GameJudge`)
+* Print out the winner(s) (`ConsoleWrapper`)
 
-ErrorHandler handles errors (prints out error message and kills execution)
+`ErrorHandler` handles errors (prints out error message and kills execution)
 
 Models:
 
-* Hand:  with player id, the cards, and score
-* Card:  with Suit and Rank as enums
+* `Hand`:  with player id, the cards, and score
+* `Card`:  with Suit and Rank as enums
 
 Unit Tests
 ----------
 
 All unit tests are run before the main program execution begins.  Because Xcode does not allow attaching an XCTest target to a console application target, I had to build my own simple test class to run the tests.
+
+Unit tests may be disabled by commenting out `runUnitTests()` in `main.swift`
 
 
