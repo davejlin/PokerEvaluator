@@ -15,13 +15,13 @@ protocol GameJudgeProtocol {
 class GameJudge: GameJudgeProtocol {
     func getSortedWinnerIds(for game: [Hand]) -> [Int] {
         let sortedGameByScore = game.sorted(by: { $0.score > $1.score } )
-        let topHands = findTopHandsByScore(for: sortedGameByScore)
+        let winners = findTopHandsByScore(for: sortedGameByScore)
         
-        if topHands.count == 1 {
-            return [topHands[0].id]
+        if winners.count == 1 {
+            return [winners[0].id]
         }
         
-        let tieScoresWinners = breakTies(for: topHands)
+        let tieScoresWinners = breakTies(for: winners)
         
         return tieScoresWinners
             .map { $0.id }
@@ -29,10 +29,9 @@ class GameJudge: GameJudgeProtocol {
     }
     
     private func findTopHandsByScore(for sortedGame: [Hand]) -> [Hand] {
-        let topScore = sortedGame[0].score
-        var winners = [Hand]()
-        
-        winners.append(sortedGame[0])
+        let firstHand = sortedGame[0];
+        let topScore = firstHand.score
+        var winners = [firstHand]
         
         for i in 1..<sortedGame.count {
             if sortedGame[i].score == topScore {
@@ -72,8 +71,9 @@ class GameJudge: GameJudgeProtocol {
     }
     
     private func findWinners(in hands:[Hand], of iCard: Int) -> [Hand] {
-        var topRank = hands[0].cards[iCard].rank
-        var winners = [hands[0]]
+        let firstHand = hands[0]
+        var topRank = firstHand.cards[iCard].rank
+        var winners = [firstHand]
         
         for iHand in 1..<hands.count {
             let hand = hands[iHand]
@@ -92,7 +92,8 @@ class GameJudge: GameJudgeProtocol {
     
     private func findWinners(in hands:[Hand], with ranks: [Rank]) -> [Hand] {
         var topRank = ranks[0]
-        var winners = [hands[0]]
+        let firstHand = hands[0]
+        var winners = [firstHand]
         
         for iHand in 1..<hands.count {
             let rank = ranks[iHand]
