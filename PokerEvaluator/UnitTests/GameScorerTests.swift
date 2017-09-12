@@ -11,11 +11,11 @@ import Foundation
 class GameScorerTests {
     let mockConsole = MockConsole()
     let mockErrorHander = MockErrorHandler()
-    let gameDecoder: GameDecoderProtocol
     let gameScorer: GameScorerProtocol = GameScorer()
+    let gameDecoder: GameDecoderProtocol
     
     init() {
-        gameDecoder = GameDecoder(console: mockConsole, errorHandler: mockErrorHander)
+        gameDecoder = GameDecoder(console: mockConsole, gameScorer: gameScorer, errorHandler: mockErrorHander)
         runTests()
     }
 
@@ -45,8 +45,7 @@ class GameScorerTests {
             "3 Ad Qd Kd"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.STRAIGHT_FLUSH)
@@ -62,8 +61,7 @@ class GameScorerTests {
             "3 Kd Ad Qd"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.STRAIGHT_FLUSH)
@@ -79,8 +77,7 @@ class GameScorerTests {
             "3 3d Ad 2d"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.STRAIGHT_FLUSH_ACE_LOW)
@@ -98,8 +95,7 @@ class GameScorerTests {
             "3 Ac Qh Ks"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.STRAIGHT)
@@ -115,8 +111,7 @@ class GameScorerTests {
             "3 Kc Ah Qs"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.STRAIGHT)
@@ -132,8 +127,7 @@ class GameScorerTests {
             "3 3c 2h As"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.STRAIGHT_ACE_LOW)
@@ -151,8 +145,7 @@ class GameScorerTests {
             "3 Ad Qd 6d"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.FLUSH)
@@ -170,8 +163,7 @@ class GameScorerTests {
             "3 5c 5s 5c"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.THREE_OF_A_KIND)
@@ -187,8 +179,7 @@ class GameScorerTests {
             "3 5s 5s 5s"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.THREE_OF_A_KIND)
@@ -206,8 +197,7 @@ class GameScorerTests {
             "3 7c 5h 5s"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.PAIR)
@@ -223,8 +213,7 @@ class GameScorerTests {
             "3 7d 5d 5d"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.FLUSH)
@@ -242,8 +231,7 @@ class GameScorerTests {
             "3 Ad Qc 6h"
         ]
         
-        var game = setupGame(with: input)
-        gameScorer.score(of: &game)
+        let game = setupGame(with: input)
         
         for hand in game {
             assert(hand.score == Score.HIGH_CARD)

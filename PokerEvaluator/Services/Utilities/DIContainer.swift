@@ -15,8 +15,8 @@ class DIContainer {
         let console: ConsoleProtocol = ConsoleWrapper()
         let gameScorer: GameScorerProtocol = GameScorer()
         let gameJudge: GameJudgeProtocol = GameJudge()
-        let gameDecoder = GameDecoder(console: console, errorHandler: errorHandler)
+        let gameDecoder = GameDecoder(console: console, gameScorer: gameScorer, errorHandler: errorHandler)
         
-        return GameManager(console: console, gameDecoder: gameDecoder, gameScorer: gameScorer, gameJudge: gameJudge)
+        return GameManager(console: console, gameDecoder: gameDecoder, gameJudge: gameJudge)
     }
 }

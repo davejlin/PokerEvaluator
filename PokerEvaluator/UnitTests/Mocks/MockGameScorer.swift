@@ -10,7 +10,8 @@ import Foundation
 
 class MockGameScorer: GameScorerProtocol {
     var isScoreCalled = false
-    func score(of hands: inout [Hand]) {
+    func score(of cards: [Card]) -> Int {
         isScoreCalled = true
+        return 0;
     }
 }

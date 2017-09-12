@@ -9,99 +9,23 @@
 import Foundation
 
 protocol GameScorerProtocol {
-    func score(of hands: inout [Hand])
+    func score(of cards: [Card]) -> Int
 }
 
 class GameScorer: GameScorerProtocol {
-    func score(of hands: inout [Hand]) {
-        for i in 0..<hands.count {
-            hands[i].setScore(with: calculateScore(of: hands[i].cards))
-        }
+    
+    private let handScorers: [HandScorerProtocol]
+    
+    init () {
+        handScorers = HandScorers().getScorers()
     }
     
-    private func calculateScore(of sortedCards: [Card]) -> Int {
-        let straight = isStraight(of: sortedCards)
-        let straightWithAceLow = isStraightWithAce(of: sortedCards)
-        let flush = isFlush(of: sortedCards)
-        
-        if straight && flush {
-            return Score.STRAIGHT_FLUSH
+    func score(of cards: [Card]) -> Int {
+        for scorer in handScorers {
+            guard let score = scorer.getScore(of: cards) else { continue }
+            return score
         }
-        
-        if straightWithAceLow && flush {
-            return Score.STRAIGHT_FLUSH_ACE_LOW
-        }
-        
-        if straight {
-            return Score.STRAIGHT
-        }
-        
-        if straightWithAceLow {
-            return Score.STRAIGHT_ACE_LOW
-        }
-        
-        if isThreeOfAKind(of: sortedCards) { return Score.THREE_OF_A_KIND }
-        if flush { return Score.FLUSH }
-        if isPair(of: sortedCards) { return Score.PAIR }
-        
-        return Score.HIGH_CARD
-    }
-    
-    private func isStraight(of sortedCards: [Card]) -> Bool {
-        for i in 1..<sortedCards.count {
-            if sortedCards[i-1].rank.rawValue - sortedCards[i].rank.rawValue != 1 { return false }
-        }
-        
-        return true
-    }
-    
-    private func isStraightWithAce(of sortedCards: [Card]) -> Bool {
-        // A may have rank value 1 in a straight
-        if sortedCards[0].rank == Rank._A {
-            if sortedCards[1].rank == Rank._3 &&
-                sortedCards[2].rank == Rank._2 {
-                return true
-            }
-        }
-        return false
-    }
-    
-    private func isFlush(of sortedCards: [Card]) -> Bool {
-        let firstSuit = sortedCards[0].suit
-        for i in 1..<sortedCards.count {
-            if sortedCards[i].suit != firstSuit { return false }
-        }
-        
-        return true
-    }
-    
-    private func isThreeOfAKind(of sortedCards: [Card]) -> Bool {
-        let firstRank = sortedCards[0].rank
-        for i in 1..<sortedCards.count {
-            if sortedCards[i].rank != firstRank { return false }
-        }
-        
-        return true
-    }
-    
-    private func isPair(of sortedCards: [Card]) -> Bool {
-        for i in 0..<sortedCards.count-1 {
-            for j in i+1..<sortedCards.count {
-                if sortedCards[i].rank == sortedCards[j].rank { return true }
-            }
-        }
-        
-        return false
+        return 0
     }
 }
 
-struct Score {
-    static let STRAIGHT_FLUSH = 1000
-    static let STRAIGHT_FLUSH_ACE_LOW = 999
-    static let THREE_OF_A_KIND = 800
-    static let STRAIGHT = 600
-    static let STRAIGHT_ACE_LOW = 599
-    static let FLUSH = 400
-    static let PAIR = 200
-    static let HIGH_CARD = 0
-}

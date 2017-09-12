@@ -10,11 +10,12 @@ import Foundation
 
 class GameDecoderTests {
     let mockConsole = MockConsole()
+    let mockGameScorer = MockGameScorer()
     let mockErrorHander = MockErrorHandler()
     let gameDecoder: GameDecoderProtocol
     
     init() {
-        gameDecoder = GameDecoder(console: mockConsole, errorHandler: mockErrorHander)
+        gameDecoder = GameDecoder(console: mockConsole, gameScorer: mockGameScorer, errorHandler: mockErrorHander)
         runTests()
     }
     
@@ -72,6 +73,8 @@ class GameDecoderTests {
         assert(hand2.cards[1].suit == Suit.s, "should have suit")
         assert(hand2.cards[2].rank == Rank._4, "should be sorted by rank")
         assert(hand2.cards[2].suit == Suit.c, "should have suit")
+        
+        assert(mockGameScorer.isScoreCalled == true, "should call gameScorer")
     }
     
     // MARK: Error cases
@@ -227,6 +230,7 @@ class GameDecoderTests {
         mockConsole.stringsToReturn = []
         mockConsole.index = -1
         mockErrorHander.errorMessages = []
+        mockGameScorer.isScoreCalled = false
     }
     
     private func setupGame(with input: [String]) -> [Hand]? {

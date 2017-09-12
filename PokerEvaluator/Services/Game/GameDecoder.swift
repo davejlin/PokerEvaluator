@@ -14,10 +14,12 @@ protocol GameDecoderProtocol {
 
 class GameDecoder: GameDecoderProtocol {
     let console: ConsoleProtocol
+    let gameScorer: GameScorerProtocol
     let errorHandler: ErrorHandlerProtocol
     
-    init(console: ConsoleProtocol, errorHandler: ErrorHandlerProtocol) {
+    init(console: ConsoleProtocol, gameScorer: GameScorerProtocol, errorHandler: ErrorHandlerProtocol) {
         self.console = console
+        self.gameScorer = gameScorer
         self.errorHandler = errorHandler
     }
     
@@ -67,7 +69,9 @@ class GameDecoder: GameDecoderProtocol {
             return nil
         }
         
-        return Hand(id: id, cards: cards.sorted())
+        let sortedCards = cards.sorted()
+        
+        return Hand(id: id, cards: sortedCards, score: gameScorer.score(of: sortedCards))
     }
     
     private func decodeCards(from data:[String]) -> [Card]? {

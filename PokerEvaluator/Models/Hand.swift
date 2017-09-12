@@ -19,12 +19,9 @@ struct Hand: HandProtocol {
     let cards: [Card]
     var score = 0
 
-    init(id: Int, cards: [Card]) {
+    init(id: Int, cards: [Card], score: Int) {
         self.id = id
         self.cards = cards
-    }
-    
-    mutating func setScore(with score: Int) {
         self.score = score
     }
 }

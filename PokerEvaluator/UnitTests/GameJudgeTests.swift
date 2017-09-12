@@ -18,7 +18,7 @@ class GameJudgeTests {
     init() {
         gameJudge = GameJudge()
         gameScorer = GameScorer()
-        gameDecoder = GameDecoder(console: mockConsole, errorHandler: mockErrorHander)
+        gameDecoder = GameDecoder(console: mockConsole, gameScorer: gameScorer, errorHandler: mockErrorHander)
         runTests()
     }
     
@@ -589,8 +589,7 @@ class GameJudgeTests {
             mockConsole.stringsToReturn.append(string)
         }
         
-        var game =  gameDecoder.decodeGameFromConsoleInput()!
-        gameScorer.score(of: &game)
+        let game =  gameDecoder.decodeGameFromConsoleInput()!
         return gameJudge.getSortedWinnerIds(for: game)
     }
 }
