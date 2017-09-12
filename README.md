@@ -142,7 +142,7 @@ High Level Design
 `GameManger` acts as the main executor of the high level logic of the program.  The execution flow is summarized in the `start()` method:  
 
 * Get the game from console input (`GameDecoder`, `ConsoleWrapper`)
-* Score the hands (`GameScorer`)
+* During the parsing process above, score the hands (`GameScorer`, `HandScorers`)
 * Detemine the winner(s), and break ties if necessary (`GameJudge`)
 * Print out the winner(s) (`ConsoleWrapper`)
 

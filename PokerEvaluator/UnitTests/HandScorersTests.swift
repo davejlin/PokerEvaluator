@@ -1,5 +1,5 @@
 //
-//  HandScorerTests.swift
+//  HandScorersTests.swift
 //  PokerEvaluator
 //
 //  Created by Lin David, US-20 on 9/12/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HandScorerTests {
+class HandScorersTests {
     
     init() {
         runTests()

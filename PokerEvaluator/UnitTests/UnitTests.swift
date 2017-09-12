@@ -19,7 +19,7 @@ class UnitTests {
         gameDecoderTests()
         gameJudgeTests()
         gameScorerTests()
-        handScorerTests()
+        handScorersTests()
     }
     
     func sortTests() {
@@ -42,7 +42,7 @@ class UnitTests {
         let _ = GameScorerTests()
     }
     
-    func handScorerTests() {
-        let _ = HandScorerTests()
+    func handScorersTests() {
+        let _ = HandScorersTests()
     }
 }
